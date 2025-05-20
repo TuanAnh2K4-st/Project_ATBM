@@ -19,67 +19,104 @@ public class LoginRegister extends HttpServlet {
    @Override
    public void init() throws ServletException {
       service = new AuthorService();
+      if (service == null) {
+         System.out.println("LỖI: service không được khởi tạo đúng!");
+      } else {
+         System.out.println("Dịch vụ đã được khởi tạo thành công!");
+      }
+   }
+
+   //Hiển thị trang đăng nhập và đăng ký
+   @Override
+   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     request.getRequestDispatcher("Trangdangnhap_dangky.jsp").forward(request, response);
    }
 
    @Override
-   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      request.getRequestDispatcher("Trangdangnhap_dangky.jsp").forward(request, response);
-   }
-
-   @Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      // Xử lý UTF-8
-      request.setCharacterEncoding("UTF-8");
-      response.setCharacterEncoding("UTF-8");
-
+   public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       System.out.println("----- BẮT ĐẦU XỬ LÝ POST -----");
 
-      String username = request.getParameter("username");
-      String password = request.getParameter("login-password");
-      String usernameR = request.getParameter("new_username");
-      String email = request.getParameter("emailL");
-      String passwordR = request.getParameter("new_password");
+         String username = request.getParameter("username");
+         String password = request.getParameter("login-password");
 
-      // Đăng nhập
-      if (username != null && password != null) {
-         AccountUsers userlogin = AuthorService.checkLogin(username, password);
-         if (userlogin != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("userId", userlogin.getUserId());
-            session.setAttribute("user", userlogin);
-            request.setAttribute("successMessage", "Đăng nhập thành công!");
+         String usernameR = request.getParameter("new_username");
+         String email = request.getParameter("emailL");
+         String passwordR = request.getParameter("new_password");
 
-            int role = service.getRole(session);
-            if (role == 2) {
-               response.sendRedirect("Trang_Admin.jsp");
+
+      //Kiểm tra đăng nhập
+         if (username != null && password != null) {
+            System.out.println("Đang kiểm tra đăng nhập...");
+            System.out.println("Username đăng nhập: " + username);
+            System.out.println("Password đăng nhập: " + password);
+
+            AccountUsers userlogin = service.checkLogin(username, password);
+        /* userlogin.setUserName(username);
+         userlogin.setPasswordUser(password);*/
+
+            if (userlogin != null) {
+               System.out.println("Đăng nhập thành công!");
+               HttpSession session = request.getSession();
+               session.setAttribute("userId", userlogin.getUserId());
+               session.setAttribute("user", userlogin);
+               request.setAttribute("successMessage", "Đăng nhập thành công!");
+
+               int role = service.getRole(session); // Truyền session vào phương thức getRole
+
+               if (role == 0 || role == 1) {
+                  // Điều hướng đến giao diện người dùng
+                  System.out.println("Đăng nhập thành công! Vào trang chủ");
+                  response.sendRedirect("Trang_chu.jsp");
+
+                  //response.getWriter().println("<h1>Đăng nhập thành công! Vào trang chủ</h1>");
+
+               } else if (role == 2) {
+                  // Điều hướng đến giao diện admin
+                  System.out.println("Đăng nhập thành công! Vào trang admin");
+                  response.sendRedirect("Trang_Admin.jsp");
+                //  response.getWriter().println("<h1>Đăng nhập thành công! Vào Admin</h1>");
+
+               }
             } else {
-               response.sendRedirect("Trang_chu.jsp");
+               request.setAttribute("loginError", "Tên đăng nhập hoặc mật khẩu không đúng!");
+               request.setAttribute("oldUsername", username); // SỬA ĐỔI isuse 1: Giữ lại username khi sai
+               request.getRequestDispatcher("Trangdangnhap_dangky.jsp").forward(request, response);
             }
-            return;
-         } else {
-            request.setAttribute("loginError", "Tên đăng nhập hoặc mật khẩu không đúng!");
-            request.getRequestDispatcher("Trangdangnhap_dangky.jsp").forward(request, response);
-            return;
          }
-      }
 
-      // Đăng ký
-      if (usernameR != null && email != null && passwordR != null) {
-         if (usernameR.isEmpty() || email.isEmpty() || passwordR.isEmpty()) {
-            request.setAttribute("emailError", "Vui lòng điền đầy đủ.");
-         } else if (!email.contains("@")) {
-            request.setAttribute("emailError", "Email không hợp lệ.");
-         } else {
-            boolean isRegistered = service.register(usernameR, email, passwordR);
-            if (isRegistered) {
-               request.setAttribute("registerSuccess", "Đăng ký thành công!");
+         //Kiểm tra đăng ký
+         if (usernameR != null && email != null && passwordR != null) {
+            System.out.println("Đang xử lý đăng ký...");
+
+            System.out.println("Username đăng ký: " + usernameR);
+            System.out.println("Email đăng ký: " + email);
+            System.out.println("Password đăng ký: " + passwordR);
+
+            //Kiểm tra ng dùng nhập hợp lệ không
+            if (usernameR.isEmpty() || email.isEmpty() || passwordR.isEmpty()) {
+               request.setAttribute("emailError", "Vui lòng điền đầy đủ.");
+            } else if (!email.contains("@")) {
+               request.setAttribute("emailError", "Email không hợp lệ.");
             } else {
-               request.setAttribute("registerError", "Tên tài khoản hoặc email đã tồn tại.");
+               boolean isRegistered = service.register(usernameR, email, passwordR);
+               System.out.println("Kết quả đăng ký: " + isRegistered);
+
+               if (isRegistered) {
+                  System.out.println("Đăng ký thành công!");
+                  request.setAttribute("registerSuccess", "Đăng ký thành công!");
+               } else {
+                  System.out.println("Lỗi đăng ký: Tên tài khoản hoặc email đã tồn tại.");
+                  request.setAttribute("registerError", " Tên tài khoản hoặc email đã tồn tại.");
+               }
+
             }
+            //Chuyển hướng đăng nhập lại sau đăng ký
+            System.out.println("Forwarding to dangnhap_dangky.jsp...");
+           request.getRequestDispatcher("Trangdangnhap_dangky.jsp").forward(request, response);
          }
-         request.getRequestDispatcher("Trangdangnhap_dangky.jsp").forward(request, response);
-      }
 
       System.out.println("----- KẾT THÚC XỬ LÝ POST -----");
+
    }
+
 }
