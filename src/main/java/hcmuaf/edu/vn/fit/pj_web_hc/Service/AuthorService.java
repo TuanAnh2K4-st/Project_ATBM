@@ -33,8 +33,7 @@ public class AuthorService {
                 } else {
                     System.out.println("Mật khẩu không đúng.");
                 }
-            }
-            else {
+            } else {
                 System.out.println("Không tìm thấy tài khoản đã nhập.");
 
             }
@@ -43,6 +42,7 @@ public class AuthorService {
         }
         return null;
     }
+
     // SỬA ĐỔI issuse1: Thêm kiểm tra username/email đã tồn tại
     public boolean isUsernameOrEmailExist(String username, String email) {
         String sql = "SELECT * FROM AccountUsers WHERE userName = ? OR email = ?";
@@ -70,6 +70,7 @@ public class AuthorService {
             e.printStackTrace();
         }
     }
+
     //Kiểm tra mật khẩu nhập vào với mật khẩu gốc đã mã hóa
     public static boolean checkPassword(String oldPassword, String passwordUser) {
         return hashPassword(oldPassword).equals(passwordUser);
@@ -77,14 +78,14 @@ public class AuthorService {
 
     public static boolean updateUserPassword(AccountUsers user) {
         String sql = "UPDATE accountusers SET passwordUser = ? WHERE userId = ?";
-        try(Connection conn = new DBConnect().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getPasswordUser());
             stmt.setInt(2, user.getUserId());
 
             int rowsAffect = stmt.executeUpdate();
-            return rowsAffect >0;
-        }catch (SQLException e){
+            return rowsAffect > 0;
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -136,7 +137,7 @@ public class AuthorService {
                 sb.append(String.format("%02x", b));//Mỗi byte (b) được chuyển thành một cặp số hex (%02x đảm bảo luôn có 2 chữ số).
             }
             return sb.toString();  //Kết quả cuối cùng là một chuỗi 32 ký tự biểu diễn giá trị băm MD5.
-        }catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return null;
         }
@@ -149,6 +150,28 @@ public class AuthorService {
             return user.getRole(); // Lấy vai trò từ đối tượng người dùng trong phiên
         }
         return -1;
+    }
+    public AccountUsers getUserByUsername(String username) {
+        String sql = "SELECT * FROM AccountUsers WHERE userName=?";
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new AccountUsers(
+                        rs.getInt("userId"),
+                        rs.getString("userName"),
+                        rs.getString("passwordUser"),
+                        rs.getString("email"),
+                        rs.getInt("role"),
+                        rs.getDate("createAt"),
+                        rs.getString("avatarUrl")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 
