@@ -1,3 +1,5 @@
+<%@ page import="hcmuaf.edu.vn.fit.pj_web_hc.DAO.ProductDao" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!--Chúng ta có thể đặt các tệp JSP ở bất kỳ vị trí nào trong tệp WAR, tuy nhiên nếu chúng ta đặt nó bên trong thư mục WEB-INF,
 chúng ta sẽ không thể truy cập trực tiếp từ máy khách. Chúng ta có thể cấu hình JSP giống như servlet trong web.xml,
@@ -482,31 +484,20 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
             </tr>
             </thead>
             <tbody>
+            <c:forEach var="p" items="${productsList}">
             <tr>
-              <td>Hóa chất A</td>
-              <td>HC001</td>
-              <td><img src="https://hoachatthinghiem.org/wp-content/uploads/2024/10/Sodium-Dodecylsulfonate-%E2%89%A597-AR-Chai-250G-Xilong-Cas-2386-53-0-768x768.jpg"
-                       alt="Hóa chất A" style="width:50px;"></td>
-              <td>Xilong</td>
-              <td>100</td>
-              <td>750.000 VND</td>
+              <td>${p.productName}</td>
+              <td>${p.productId}</td>
+              <td><img src="${p.imageProduct}"
+                       alt="${p.productName}" style="width:50px;"></td>
+              <td>${p.brandName}</td>
+              <td>${p.getQuantityStock()}</td>
+              <td>${p.priceSell} VNĐ</td>
               <td>
                 <button>Sửa</button>
               </td>
             </tr>
-            <tr>
-              <td>Hóa chất B</td>
-              <td>HC002</td>
-              <td><img src="https://hoachatthinghiem.org/wp-content/uploads/2024/11/Glycine-100g-merck.jpg"
-                       alt="Hóa chất B" style="width:50px;"></td>
-              <td>Xilong</td>
-              <td>40</td>
-              <td>1.200.000 VND</td>
-              <td>
-                <button>Sửa</button>
-              </td>
-            </tr>
-
+            </c:forEach>
             </tbody>
           </table>
         </div>
