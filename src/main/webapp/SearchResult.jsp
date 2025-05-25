@@ -208,7 +208,7 @@
                 </form>
             </div>
             <div class="col-3 d-flex justify-content-end align-items-center">
-                <a href="Trang giỏ hàng.jsp"><i class="fa-solid fa-cart-plus" style="color: #2693E0; font-size: 30px; margin: 30px"></i></a>
+                <a href="homePage"><i class="fa-solid fa-cart-plus" style="color: #2693E0; font-size: 30px; margin: 30px"></i></a>
                 <!--<a href="Trang%20giỏ%20hàng.html"><i class="fa-solid fa-cart-shopping" id="giỏ hàng" style="color: #2693E0; font-size: 40px; margin: 30px;"></i></a>-->
                 <a href="Trang_thong_tin_user.jsp"> <i class="fas fa-user" id="user" style="color: #2693E0; font-size: 30px; margin: 30px;"></i></a>
             </div>
