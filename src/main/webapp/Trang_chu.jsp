@@ -159,8 +159,11 @@
     }
     .product-list {
       display: flex;
-      gap: 10px;
-      transition: transform 0.3s ease;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 15px;
+      padding: 10px;
+      max-width: 100%;
     }
     .product-card {
       white-space: normal;
@@ -187,6 +190,13 @@
     .product-card:hover { /* tạo hiệu ứng khi hover*/
       transform: scale(1.05);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    button.prev, button.next {
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      top: -130px;
     }
     .boxNew button {
       position: absolute;
@@ -477,40 +487,6 @@
         }
       }
       %>
-
-     <!-- <div class="product-card">
-        <img src="https://hoachatthinghiem.org/wp-content/uploads/2024/10/Sodium-Acetate-anhydrous-%E2%89%A5-99-AR-Chai-1KG-Fisher-My-Cas-127-09-3-768x768.jpg" alt="Sản phầm 1">
-        <h5>Sodium Acetate anhydrous ≥ 99% (AR, Chai 1KG, Fisher Mỹ, Cas 127-09-3)</h5>
-          <p><strong>
-            750.000 VNĐ</strong></p>
-
-      </div>
-      <div class="product-card">
-        <a href="Trang%20chi%20tiết%201%20sản%20phẩm.html"><img src="https://hoachatthinghiem.org/wp-content/uploads/2024/10/Oleanolic-acid-98-Cool-chemistry-25G-768x768.jpg" alt="Sản phẩm 2">
-        </a>
-          <h5>Oleanolic acid ≥98% (Cool Chemistry, Cas 508-02-1)</h5>
-        <p><strong>1.050.000 VNĐ</strong></p>
-      </div>
-      <div class="product-card">
-        <img src="https://hoachatthinghiem.org/wp-content/uploads/2019/02/Glycine-Duchefa-98-768x768.jpg" alt="Sản phẩm 3">
-        <h5>Glycine 98.5%(Chai 1KG, Duchefa, Cas 56-40-6)</h5>
-        <p><strong>1.750.000 VNĐ</strong></p>
-      </div>
-      <div class="product-card">
-        <img src="https://hoachatthinghiem.org/wp-content/uploads/2017/12/TDZThidiazuron-768x768.jpg" alt="Sản phẩm 4">
-        <h5>Thidiazuron >95% (TDZ, Duchefa, Cas 51707-55-2)</h5>
-        <p><strong>5.200.000 VNĐ</strong></p>
-      </div>
-      <div class="product-card">
-        <img src="https://hoachatthinghiem.org/wp-content/uploads/2019/10/Sodium-Hydrogen-Carbonate-NaHCO3-768x768.jpg" alt="Sản phẩm 5">
-        <h5>Sodium Hydrogen Carbonate (NaHCO3, Fisher Mỹ, Cas 144-55-8)</h5>
-        <p><strong>520.000 VNĐ</strong></p>
-      </div>
-      <div class="product-card">
-        <img src="https://hoachatthinghiem.org/wp-content/uploads/2019/01/BHI-Broth-768x768.jpg" alt="Sản phẩm 6">
-        <h5>BHI Broth- Brain Heart Infusion Broth (Himedia)</h5>
-        <p><strong>1.050.000 VNĐ</strong></p>
-      </div>-->
   </div>
     <button class="next"><i class="fa-solid fa-circle-chevron-right fa-lg" style="color: #2693E0;"></i></button>
   </div>
@@ -607,51 +583,17 @@
 
 </footer>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const productList = document.querySelector(".product-list");
-    const prevBtn = document.querySelector(".prev");
-    const nextBtn = document.querySelector(".next");
-    const productWidth = document.querySelector(".product-card").offsetWidth + 10; // Kích thước sản phẩm + khoảng cách
-    const productListWidth = productList.scrollWidth; // Tổng chiều rộng của danh sách sản phẩm
-    const visibleWidth = document.querySelector(".boxNew").offsetWidth; // Chiều rộng của khung hiển thị
-    let scrollPosition = 0;
-
-    nextBtn.addEventListener("click", () => {
-      const maxScroll = productListWidth - visibleWidth; // Điểm cuộn tối đa
-      scrollPosition += productWidth;
-
-      if (scrollPosition > maxScroll) scrollPosition = maxScroll; // Giới hạn ở cuối danh sách
-      productList.style.transform = `translateX(-${scrollPosition}px)`;
-
-      // Vô hiệu hóa nút nếu đã đến cuối
-      if (scrollPosition >= maxScroll) {
-        nextBtn.disabled = true;
-      }
-      prevBtn.disabled = false; // Kích hoạt nút prev
+  $(document).ready(function() {
+    $(".next").click(function() {
+      let productList = $(this).siblings(".product-list");
+      productList.animate({scrollLeft: '+=300'}, 400);
     });
 
-    prevBtn.addEventListener("click", () => {
-      scrollPosition -= productWidth;
-
-      if (scrollPosition < 0) scrollPosition = 0; // Giới hạn ở đầu danh sách
-      productList.style.transform = `translateX(-${scrollPosition}px)`;
-
-      // Vô hiệu hóa nút nếu đã đến đầu
-      if (scrollPosition <= 0) {
-        prevBtn.disabled = true;
-      }
-      nextBtn.disabled = false; // Kích hoạt nút next
+    $(".prev").click(function() {
+      let productList = $(this).siblings(".product-list");
+      productList.animate({scrollLeft: '-=300'}, 400);
     });
-
-    // Khởi tạo trạng thái ban đầu
-    prevBtn.disabled = true; // Vô hiệu hóa nút prev khi bắt đầu
-    if (productListWidth <= visibleWidth) {
-      nextBtn.disabled = true; // Vô hiệu hóa nút next nếu không có đủ sản phẩm để cuộn
-    }
   });
-
-
 </script>
-
 </body>
 </html>
