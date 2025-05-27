@@ -564,7 +564,7 @@
     <div class="container-flugin">
         <div class="row">
             <div class="col-3">
-                <a href="Trang_chu.jsp"><img src="img/logo CAD_Xóa nền.png" class="logo" height="150"
+                <a href="homePage"><img src="img/logo CAD_Xóa nền.png" class="logo" height="150"
                                                 width="auto"/></a>
             </div>
             <div class="col-6 d-flex justify-content-center align-items-center">

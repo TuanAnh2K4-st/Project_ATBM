@@ -66,7 +66,7 @@ public class LoginRegister extends HttpServlet {
                if (role == 0 || role == 1) {
                   // Điều hướng đến giao diện người dùng
                   System.out.println("Đăng nhập thành công! Vào trang chủ");
-                  response.sendRedirect("Trang_chu.jsp");
+                  response.sendRedirect("homePage");
 
                   //response.getWriter().println("<h1>Đăng nhập thành công! Vào trang chủ</h1>");
 

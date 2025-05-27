@@ -165,8 +165,8 @@
 
         <div class="col-6 d-flex justify-content-center align-items-center">
                <img src="img/logo CAD_Xóa nền.png" class="logo-img" alt="logo">
-            <a class="nav-item" href="Trang_chu.jsp">Trang chủ</a>
-                <a class="nav-item" href="Trangdangnhap_dangky.jsp" >Đăng nhập</a>
+            <a class="nav-item" href="homePage">Trang chủ</a>
+                <a class="nav-item" href="loginregister" >Đăng nhập</a>
 
     </div>
 </div>
