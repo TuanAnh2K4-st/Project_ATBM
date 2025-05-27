@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DBConnect {
    static String url = "jdbc:mysql://localhost:3306/dbcad";
-   static Connection conn = null;
+   public static Connection conn = null;
 
    public Connection getConnection() {
        try{

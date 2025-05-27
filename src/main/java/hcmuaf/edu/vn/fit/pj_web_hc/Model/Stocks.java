@@ -7,7 +7,8 @@ public class Stocks {
     private int minQuatity ;
     private String updateStockAt ;
     private int productId ;
-
+public Stocks() {
+}
     public int getStockId() {
         return stockId;
     }
