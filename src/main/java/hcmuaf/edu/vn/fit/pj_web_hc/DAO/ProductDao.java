@@ -214,7 +214,7 @@ public class ProductDao {
     }
 
     // Lấy sản phẩm theo ID
-    public Products getProductById(int productId) {
+    public static Products getProductById(int productId) {
         Statement s = DBConnect.get();
         if (s == null) return null;
         ResultSet rs = null;

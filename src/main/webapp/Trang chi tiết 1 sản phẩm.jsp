@@ -693,7 +693,10 @@
                     <div class="quantity">
                         <input type="number" id="quantity" value="1" min="1" onchange="updateQuantity(this)">
                     </div>
-                    <button class="buy-btn" onclick="addToCart('${product.productId}',document.getElementById('quantity').value)"><i class="fa-solid fa-cart-plus" name="cart"></i> Thêm vào giỏ hàng</button>
+                    <button class="buy-btn"
+                            onclick="addToCart('${product.productId}', document.getElementById('quantity').value)">
+                        <i class="fa-solid fa-cart-plus" name="cart"></i> Thêm vào giỏ hàng
+                    </button>
                     <a href="Trang thanh toán.jsp">
                         <button type="submit" class="buy-btn-now">Mua Ngay</button>
                     </a>
@@ -832,85 +835,41 @@
 <!--THÊM PHẦN ĐÁNH GIÁ VÔ ĐI-->
 </div>
 </body>
-<script>// Add event listener to the button
-/*hiệu ứng icon cart bay*/
-document.querySelector('.buy-btn').addEventListener('click', () => {
-    const cartIcon = document.querySelector('.fa-cart-shopping');
-    const button = document.querySelector('.buy-btn');
-    const quantityInput = document.querySelector('#quantity');
-    const quantity = quantityInput.value;
-    // Create the flying item
-    const flyingItem = document.createElement('div');
-    flyingItem.className = 'fly-item';
-    flyingItem.textContent = quantity;
-    document.body.appendChild(flyingItem);
-    // Get button and cart icon positions, including scroll offsets
-    const buttonRect = button.getBoundingClientRect();
-    const cartRect = cartIcon.getBoundingClientRect();
-    const buttonX = buttonRect.left + window.scrollX; // Add horizontal scroll offset
-    const buttonY = buttonRect.top + window.scrollY;  // Add vertical scroll offset
-    const cartX = cartRect.left + window.scrollX;     // Add horizontal scroll offset
-    const cartY = cartRect.top + window.scrollY;      // Add vertical scroll offset
-    // Set initial position of the flying item
-    flyingItem.style.left = `${buttonX + buttonRect.width / 2 - 25}px`;
-    flyingItem.style.top = `${buttonY}px`;
-    // Start the animation
-    setTimeout(() => {
-        flyingItem.style.left = `${cartX + cartRect.width / 2 - 25}px`;
-        flyingItem.style.top = `${cartY + cartRect.height / 2 - 25}px`;
-        flyingItem.style.transform = 'scale(0.5)';
-        flyingItem.style.opacity = '0';
-    }, 10);
-    // Remove the flying item after animation ends
-    setTimeout(() => {
-        flyingItem.remove();
-    }, 1000);
-});
-/*Chuyển đổi giữa các phần Mô Tả và Đánh Giá*/
-// Lấy các phần tử trong HTML
-const btnDescription = document.getElementById('btnDescription');
-const btnReviews = document.getElementById('btnReviews');
-const descriptionSection = document.getElementById('description');
-const reviewsSection = document.getElementById('reviews');
-const submitReviewButton = document.getElementById('submitReview');
-const userReviewTextarea = document.getElementById('userReview');
-const reviewList = document.querySelector('.review-list');
-// Chức năng chuyển đổi giữa các phần Mô Tả và Đánh Giá
-btnDescription.addEventListener('click', () => {
-    // Chuyển đổi tab
-    descriptionSection.classList.add('active');
-    reviewsSection.classList.remove('active');
-    // Thêm class active cho nút
-    btnDescription.classList.add('active');
-    btnReviews.classList.remove('active');
-});
-btnReviews.addEventListener('click', () => {
-    // Chuyển đổi tab
-    reviewsSection.classList.add('active');
-    descriptionSection.classList.remove('active');
-    // Thêm class active cho nút
-    btnReviews.classList.add('active');
-    btnDescription.classList.remove('active');
-});
-// Chức năng gửi đánh giá
-submitReviewButton.addEventListener('click', () => {
-    const userReview = userReviewTextarea.value.trim();
-    if (userReview) {
-        // Tạo phần tử đánh giá mới
-        const newReview = document.createElement('div');
-        newReview.classList.add('review');
-        newReview.innerHTML = `<p><strong>Bạn:</strong> ${userReview}</p>`;
-        // Thêm đánh giá mới vào danh sách
-        reviewList.appendChild(newReview);
-        // Xóa nội dung trong textarea
-        userReviewTextarea.value = '';
-    }
-});
- function updateQuantity(input) {
-     if (input.value <1){
-         input.value =1;
-     }
- }
+<script>
+    function addToCart(productId, quantity, event) {
+        event.preventDefault(); // Ngăn mặc định nếu cần (nếu dùng thẻ <a>)
 
+        const button = event.currentTarget;
+
+        // Hiệu ứng icon bay
+        const cartIcon = document.querySelector('.fa-cart-shopping');
+        const quantityInput = document.querySelector('#quantity');
+
+        // Tạo flying item
+        const flyingItem = document.createElement('div');
+        flyingItem.className = 'fly-item';
+        flyingItem.textContent = quantity;
+        document.body.appendChild(flyingItem);
+
+        const buttonRect = button.getBoundingClientRect();
+        const cartRect = cartIcon.getBoundingClientRect();
+
+        flyingItem.style.left = `${buttonRect.left + window.scrollX + buttonRect.width / 2 - 25}px`;
+        flyingItem.style.top = `${buttonRect.top + window.scrollY}px`;
+
+        setTimeout(() => {
+            flyingItem.style.left = `${cartRect.left + window.scrollX + cartRect.width / 2 - 25}px`;
+            flyingItem.style.top = `${cartRect.top + window.scrollY + cartRect.height / 2 - 25}px`;
+            flyingItem.style.transform = 'scale(0.5)';
+            flyingItem.style.opacity = '0';
+        }, 10);
+
+        setTimeout(() => {
+            flyingItem.remove();
+
+            // Sau khi hiệu ứng xong thì gửi request thêm giỏ hàng
+            window.location.href = `/add-to-cart?id=${productId}&quantity=${quantity}`;
+        }, 1000);
+    }
 </script>
 </html>

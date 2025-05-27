@@ -395,41 +395,43 @@
         <div class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
           <div class="d-flex flex-row align-items-center" style="flex: 1;">
             <ul>
-                <%
-        if (cart != null && !cart.isEmpty()) {
-        double totalAmount = 0.0; // Biến để tính tổng giá
-        for (Products product : cart) {
-            int productId = product.getProductId();
-            int quantity = quantityMap.get(productId);
-            double productPrice = product.getPriceSell(); // Hoặc giá bạn muốn hiển thị
-            double totalPrice = productPrice * quantity; // Tính tổng giá cho sản phẩm
+              <%
+                if (cart != null && !cart.isEmpty() && quantityMap != null) {
+                  double totalAmount = 0.0;
+              %>
 
-            totalAmount += totalPrice; // Cộng dồn vào tổng giá
-%>
-              <tr>
-                <td><%= productId %></td>
-                <td><img src="<%= product.getImageProduct() %>" width="70" /></td>
-                <td><%= product.getProductName() %></td>
-                <td><%= productPrice %> VNĐ</td>
-                <td><%= quantity %></td>
-                <td><%= totalPrice %> VNĐ</td>
-              </tr>
-                <%
-        }
-%>
-              <tr>
-                <td colspan="5" style="text-align: right;"><strong>Tổng cộng:</strong></td>
-                <td><strong><%= totalAmount %> VNĐ</strong></td>
-              </tr>
-                <%
-    } else {
-%>
-              <tr>
-                <td colspan="6">Giỏ hàng trống!</td>
-              </tr>
-                <%
-    }
-%>
+              <% for (Products product : cart) {
+                int productId = product.getProductId();
+                Integer quantity = quantityMap.get(productId);
+                if (quantity == null) quantity = 1; // Mặc định 1 nếu null
+                double price = product.getPriceSell();
+                double totalPrice = price * quantity;
+                totalAmount += totalPrice;
+              %>
+              <div class="cart-item">
+                <img src="<%= product.getImageProduct() %>" alt="Ảnh sản phẩm" />
+                <div class="cart-item-details">
+                  <div><strong><%= product.getProductName() %></strong></div>
+                  <div>Mã: <%= productId %></div>
+                  <div>Giá: <%= String.format("%,.0f", price) %>₫</div>
+                  <div>Số lượng: <%= quantity %></div>
+                </div>
+                <div class="cart-item-actions">
+                  <div><strong><%= String.format("%,.0f", totalPrice) %>₫</strong></div>
+                  <!-- Bạn có thể thêm form hoặc link xử lý tăng giảm số lượng, xóa ở đây -->
+                </div>
+              </div>
+              <% } %>
+
+              <div class="total-amount">Tổng tiền: <%= String.format("%,.0f", totalAmount) %>₫</div>
+
+              <%
+              } else {
+              %>
+              <div class="empty-cart">Giỏ hàng của bạn đang trống!</div>
+              <%
+                }
+              %>
             </ul>
            <!-- <img class="rounded" src="https://hoachatthinghiem.org/wp-content/uploads/2024/10/Oleanolic-acid-98-Cool-chemistry-25G-768x768.jpg" width="70">
             <div class="ml-3">
