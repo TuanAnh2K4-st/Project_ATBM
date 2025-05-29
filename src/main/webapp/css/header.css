@@ -1,0 +1,58 @@
+/* header.css */
+.sticky {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.container-flugin {
+    height: 100px; /* Giới hạn chiều cao của header */
+    display: flex;
+    align-items: center; /* Căn giữa nội dung theo chiều dọc */
+}
+
+.navbar-custom {
+
+    background-color: #2693E0;
+    height: 50px;
+    z-index: 1030;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    color: white;
+}
+
+.navbar-custom .navbar-nav .nav-link:hover {
+    color: #f0ad4e; /* Màu vàng khi hover */
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -60px;
+    display: none;
+}
+
+.dropdown-submenu:hover .dropdown-menu {
+    display: block;
+
+}
+
+.dropdown-submenu li a:hover {
+    background-color: #1E90FF;
+    color: #fff;
+}
+
+.dropdown-menu {
+    padding: 0;
+}
+
+.d-flex {
+    margin: 0;
+}

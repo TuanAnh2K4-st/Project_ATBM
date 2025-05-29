@@ -19,7 +19,7 @@ public class HomeController extends HttpServlet {
 
         List<Products> newproducts = ProductDao.getNewProducts(); // Lấy danh sách sản phẩm từ DAO
         request.setAttribute("newProducts", newproducts);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Trang_chu.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("homePage.jsp");
         System.out.println("Số sản phẩm mới: " + newproducts.size());
         dispatcher.forward(request, response);
 

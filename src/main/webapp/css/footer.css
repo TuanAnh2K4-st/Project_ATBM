@@ -1,0 +1,99 @@
+/* footer.css */
+.footer {
+    background-color: #398BC4;
+    color: white;
+    padding: 20px;
+    font-family: Tahoma, sans-serif;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-section {
+    flex: 1;
+    padding-left: 70px;
+}
+
+.footer-section h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #f1f1f1;
+}
+/* Liên kết mạng xã hội */
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links li a {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #398BC4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.social-links li a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Phần Footer */
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1rem;
+    background-color: #156DAD;
+    padding: 15px 0;
+}
+
+.certification-images {
+    display: flex; /* Sắp xếp hình ảnh theo hàng ngang */
+    justify-content: center; /* Căn giữa hình ảnh */
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa các hình */
+    margin-top: 15px;
+}
+
+.certification-images img {
+    width: 80px; /* Chiều rộng mỗi hình ảnh */
+    height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
+    border-radius: 5px; /* Bo góc nhẹ */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng nổi */
+    transition: transform 0.3s ease;
+}
+
+.certification-images img:hover {
+    transform: scale(1.1); /* Phóng to hình ảnh khi hover */
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #bbb;
+}
+
