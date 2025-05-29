@@ -85,9 +85,14 @@
         }
 
         .product-name {
-            font-size: 15px;
-            text-align: left;
-
+            font-weight: bold;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 2.6em; /* Tùy theo font-size để giữ vừa 2 dòng */
+            line-height: 1.3em;
         }
 
         .product-items, .product-price {
@@ -96,6 +101,9 @@
 
         .product-price {
             font-weight: bold;
+            color: red;
+            text-align: center;
+            width: 100%; /* Đảm bảo chiếm toàn bộ chiều ngang khung chứa */
         }
 
         .product-view {

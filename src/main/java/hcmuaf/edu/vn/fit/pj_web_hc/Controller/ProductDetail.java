@@ -39,7 +39,7 @@ public class ProductDetail extends HttpServlet {
 
             request.setAttribute("product", product);
             request.setAttribute("relatedProducts", relatedProducts); // Truyền danh sách sản phẩm liên quan
-            request.getRequestDispatcher("Trang chi tiết 1 sản phẩm.jsp").forward(request, response);
+            request.getRequestDispatcher("productDetail.jsp").forward(request, response);
         }
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
