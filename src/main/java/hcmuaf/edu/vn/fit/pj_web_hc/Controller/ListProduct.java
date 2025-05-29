@@ -17,7 +17,7 @@ public class ListProduct extends HttpServlet {
         ProductService productService = new ProductService();
         // Lấy số trang từ request, mặc định là 1 nếu không có
         int page = 1;
-        int pageSize = 10; // Mỗi trang sẽ hiển thị 10 sản phẩm
+        int pageSize = 20; // Mỗi trang sẽ hiển thị 20 sản phẩm
         String pageParam = request.getParameter("page");
         if (pageParam != null && !pageParam.isEmpty()) {
             page = Integer.parseInt(pageParam);
@@ -44,7 +44,7 @@ public class ListProduct extends HttpServlet {
         request.setAttribute("volume", volume);
         request.setAttribute("sortPrice", sortPrice);
         // Forward đến trang JSP
-        request.getRequestDispatcher("Trang sản phẩm mới.jsp").forward(request, response);
+        request.getRequestDispatcher("listProduct.jsp").forward(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
