@@ -251,7 +251,7 @@ public class ProductDao {
 
         ResultSet rs = null;
         try {
-            String query = "SELECT * FROM products WHERE brandName = ? AND productId <> ? ORDER BY createAt DESC LIMIT 5";
+            String query = "SELECT * FROM products WHERE brandName = ? AND productId <> ? ORDER BY createAt DESC LIMIT 8";
             PreparedStatement ps = s.getConnection().prepareStatement(query);
             ps.setString(1, brandName);
             ps.setInt(2, excludeProductId);
