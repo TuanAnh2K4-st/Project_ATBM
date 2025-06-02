@@ -74,17 +74,30 @@ html, body, ul {
 }
 
 /* Danh sách sản phẩm */
-.product-list {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    gap: 15px;
-    padding: 10px;
+.boxNew {
+    height: 400px;
+    width: 100%; /* hoặc đặt cụ thể, ví dụ 900px */
+    max-width: 900px; /* giới hạn chiều rộng vùng xem */
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    padding: 15px;
+    position: relative;
+    overflow: hidden; /* ẩn phần tràn */
+    margin: 0 auto; /* căn giữa */
 }
 
-/* Thẻ sản phẩm */
+.product-list {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    /* Có thể thêm padding để tránh che nút */
+    padding-bottom: 10px;
+}
+
 .product-card {
-    flex: 0 0 200px;
+    flex: 0 0 auto; /* ❗ Chiếm cố định không co giãn */
     width: 180px;
     height: 320px;
     border: 1px solid #ddd;

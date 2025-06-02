@@ -1,13 +1,16 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.Model;
 
 public class Orders {
-    private int orderId ;
+    private int orderId;
     private String orderDate;
-    private OrdersStatus  statusOrder ;
-    private String  updateAt ;
-    private double totalAmount ;
-    private String paymentMethod ;
-    private int userId ;
+    private OrdersStatus statusOrder;
+    private String updateAt;
+    private double totalAmount;
+    private String paymentMethod;
+    private int userId;
+    private int keyId; // mới thêm
+
+    // --- Getter & Setter ---
 
     public int getOrderId() {
         return orderId;
@@ -65,16 +68,25 @@ public class Orders {
         this.userId = userId;
     }
 
+    public int getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(int keyId) {
+        this.keyId = keyId;
+    }
+
     @Override
     public String toString() {
         return "Orders{" +
                 "orderId=" + orderId +
                 ", orderDate='" + orderDate + '\'' +
-                ", statusOrder='" + statusOrder + '\'' +
+                ", statusOrder=" + statusOrder +
                 ", updateAt='" + updateAt + '\'' +
                 ", totalAmount=" + totalAmount +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", userId=" + userId +
+                ", keyId=" + keyId +
                 '}';
     }
 }

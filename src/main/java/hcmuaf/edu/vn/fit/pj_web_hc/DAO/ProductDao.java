@@ -13,7 +13,7 @@ public class ProductDao {
 
         List<Products> list = new ArrayList<>();
 
-        String sql = "select * from products ORDER BY createAt DESC LIMIT 8";
+        String sql = "select * from products ORDER BY createAt DESC LIMIT 7";
         try(Connection conn = new DBConnect().getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs= stmt.executeQuery()){

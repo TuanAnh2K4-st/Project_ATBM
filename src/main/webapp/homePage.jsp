@@ -17,19 +17,6 @@
   <link rel="stylesheet" href="css/header.css" />
   <link rel="stylesheet" href="css/footer.css" />
   <link rel="stylesheet" href="css/homePage.css" />
-  <script>
-    $(document).ready(function() {
-      $(".next").click(function() {
-        let productList = $(this).siblings(".product-list");
-        productList.animate({scrollLeft: '+=300'}, 400);
-      });
-
-      $(".prev").click(function() {
-        let productList = $(this).siblings(".product-list");
-        productList.animate({scrollLeft: '-=300'}, 400);
-      });
-    });
-  </script>
   <!-- Các link CSS, JS ở đây -->
 </head>
 <body>
@@ -142,6 +129,21 @@
 </div>
 <%--Footer--%>
 <jsp:include page="footer.jsp" />
+<script>
+  const productList = document.querySelector(".product-list");
+  const btnNext = document.querySelector(".boxNew .next");
+  const btnPrev = document.querySelector(".boxNew .prev");
 
+  const productCardWidth = 150 + 16; // 150px width + 16px gap, điều chỉnh nếu khác
+  const scrollAmount = productCardWidth * 7; // cuộn 7 sản phẩm
+
+  btnNext.addEventListener("click", () => {
+    productList.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  });
+
+  btnPrev.addEventListener("click", () => {
+    productList.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  });
+</script>
 </body>
 </html>
