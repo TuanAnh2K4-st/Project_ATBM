@@ -4,13 +4,34 @@ public class Orders {
     private int orderId;
     private String orderDate;
     private OrdersStatus statusOrder;
-    private String updateAt;
     private double totalAmount;
     private String paymentMethod;
+    private String deliveryAddress;
+    private String signature;
+    private String hashData;
     private int userId;
-    private int keyId; // mới thêm
+    private int keyId;
 
-    // --- Getter & Setter ---
+    // Constructors
+    public Orders() {
+    }
+
+    public Orders(int orderId, String orderDate, OrdersStatus statusOrder, double totalAmount,
+                  String paymentMethod, String deliveryAddress, String signature, String hashData,
+                  int userId, int keyId) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.statusOrder = statusOrder;
+        this.totalAmount = totalAmount;
+        this.paymentMethod = paymentMethod;
+        this.deliveryAddress = deliveryAddress;
+        this.signature = signature;
+        this.hashData = hashData;
+        this.userId = userId;
+        this.keyId = keyId;
+    }
+
+    // Getters and Setters
 
     public int getOrderId() {
         return orderId;
@@ -36,14 +57,6 @@ public class Orders {
         this.statusOrder = statusOrder;
     }
 
-    public String getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(String updateAt) {
-        this.updateAt = updateAt;
-    }
-
     public double getTotalAmount() {
         return totalAmount;
     }
@@ -58,6 +71,30 @@ public class Orders {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getHashData() {
+        return hashData;
+    }
+
+    public void setHashData(String hashData) {
+        this.hashData = hashData;
     }
 
     public int getUserId() {
@@ -82,9 +119,11 @@ public class Orders {
                 "orderId=" + orderId +
                 ", orderDate='" + orderDate + '\'' +
                 ", statusOrder=" + statusOrder +
-                ", updateAt='" + updateAt + '\'' +
                 ", totalAmount=" + totalAmount +
                 ", paymentMethod='" + paymentMethod + '\'' +
+                ", deliveryAddress='" + deliveryAddress + '\'' +
+                ", signature='" + signature + '\'' +
+                ", hashData='" + hashData + '\'' +
                 ", userId=" + userId +
                 ", keyId=" + keyId +
                 '}';

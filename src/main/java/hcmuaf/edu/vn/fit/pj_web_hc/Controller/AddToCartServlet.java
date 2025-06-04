@@ -1,66 +1,41 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.Controller;
 
-import hcmuaf.edu.vn.fit.pj_web_hc.Model.Products;
-import jakarta.servlet.ServletException;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.*;
+import hcmuaf.edu.vn.fit.pj_web_hc.Service.ProductService;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import hcmuaf.edu.vn.fit.pj_web_hc.DAO.ProductDao;
-
+import jakarta.servlet.http.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-@WebServlet("/add-to-cart")
+@WebServlet(name = "AddToCartServlet", value = "/add-to-cart")
 public class AddToCartServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int productId = Integer.parseInt(request.getParameter("id"));
-        int quantity = 1;
-        try {
-            quantity = Integer.parseInt(request.getParameter("quantity"));
-            if (quantity < 1) quantity = 1; // bảo vệ số lượng hợp lệ
-        } catch (Exception e) {
-            quantity = 1;
-        }
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Kiểm tra đã đăng nhập chưa
         HttpSession session = request.getSession();
+        AccountUsers user = (AccountUsers) session.getAttribute("user");
+        if (user == null) {
+            // Chưa đăng nhập => chuyển về trang đăng nhập
+            // Có thể lưu URL hiện tại để redirect về sau khi đăng nhập thành công
+            session.setAttribute("redirectAfterLogin", "productDetail?id=" + request.getParameter("productId"));
+            response.sendRedirect("loginregister");
+            return;
+        }
 
-        List<Products> cart = (List<Products>) session.getAttribute("cart");
-        Map<Integer, Integer> quantityMap = (Map<Integer, Integer>) session.getAttribute("quantityMap");
+        // Đã đăng nhập thì xử lý thêm giỏ hàng
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
+        ProductService service = new ProductService();
+        Products product = service.getProductById(String.valueOf(productId));
+
+        Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null) {
-            cart = new ArrayList<>();
-            quantityMap = new HashMap<>();
+            cart = new Cart();
+            session.setAttribute("cart", cart);
         }
 
-        boolean exists = false;
-        for (Products p : cart) {
-            if (p.getProductId() == productId) {
-                exists = true;
-                break;
-            }
-        }
+        cart.addItem(new CartItem(product, quantity));
 
-        if (!exists) {
-            Products product = ProductDao.getProductById(productId);
-            if (product != null) {
-                cart.add(product);
-                quantityMap.put(productId, quantity);
-            }
-        } else {
-            int currentQty = quantityMap.getOrDefault(productId, 0);
-            quantityMap.put(productId, currentQty + quantity);
-        }
-
-        session.setAttribute("cart", cart);
-        session.setAttribute("quantityMap", quantityMap);
-
-        // Chuyển về trang giỏ hàng
-        response.sendRedirect("Trang giỏ hàng.jsp");
+        response.sendRedirect("cartPage.jsp");
     }
 }
-
