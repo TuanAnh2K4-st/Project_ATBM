@@ -462,6 +462,7 @@
             <i class="fa fa-trash text-danger ml-3" style="margin-left: 20px; width: 20px"></i>-->
           </div>
         </div>
+        <button class="btn btn-primary btn-block" type="submit" style="margin:10px; background-color: orange">Đặt hàng</button>
 
       </div>
     </div>
@@ -480,7 +481,7 @@
         <div><label class="credit-card-label" style="font-size: 14px"> Họ tên chủ thẻ </label><input type="text" class="form-control credit-inputs" placeholder="..."></div>
         <div><label class="credit-card-label" style="font-size: 14px">Số thẻ</label><input type="text" class="form-control credit-inputs" placeholder="0000 0000 0000 0000"></div>
         <div><label class="credit-card-label" style="font-size: 14px">Ngân hàng</label><input type="text" class="form-control credit-inputs" placeholder="..."></div>
-        <button class="btn btn-primary btn-block" type="submit" style="margin:10px; background-color: orange">Đặt hàng</button>
+
       </div>
     </div>
   </div>
