@@ -49,6 +49,7 @@
           <li class="nav-item"><a class="nav-link" href="#">Thông tin web</a></li>
           <li class="nav-item"><a class="nav-link" href="Trang tin tức.jsp">Tin tức</a></li>
           <li class="nav-item"><a class="nav-link" href="Trang liên hệ.jsp">Liên hệ</a></li>
+          <li class="nav-item"><a class="nav-link" href="managerKey">Quản lý Khoá</a></li>
         </ul>
       </div>
     </div>

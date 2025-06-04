@@ -1,0 +1,104 @@
+/* ===== Reset cơ bản ===== */
+html, body, ul {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+}
+/* ===== Vùng chứa chính ===== */
+.signature-container {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    max-width: 900px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== Tiêu đề ===== */
+.signature-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0746e6;
+    margin-bottom: 25px;
+}
+
+/* ===== Form ký ===== */
+.signature-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===== Nhóm label + textarea ===== */
+.signature-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.signature-group label {
+    font-weight: bold;
+    color: #34495e;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+/* ===== Textarea ===== */
+.signature-group textarea {
+    padding: 10px 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: monospace;
+    resize: vertical;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.signature-group textarea:focus {
+    border-color: #0746e6;
+    outline: none;
+}
+
+.signature-group textarea[readonly] {
+    background-color: #f9f9f9;
+    color: #555;
+}
+
+/* ===== Nút xác nhận ===== */
+.signature-submit-btn {
+    align-self: flex-start;
+    background-color: #0746e6;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.signature-submit-btn:hover {
+    background-color: #003bb3;
+}
+
+/* ===== Responsive (Mobile) ===== */
+@media (max-width: 768px) {
+    .signature-container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .signature-submit-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .signature-group textarea {
+        font-size: 15px;
+    }
+}
