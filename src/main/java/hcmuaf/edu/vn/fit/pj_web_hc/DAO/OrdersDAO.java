@@ -1,10 +1,13 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.DAO;
 
 import hcmuaf.edu.vn.fit.pj_web_hc.DB.DBConnect;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.AccountUsers;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.KeyAccount;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.OrderDetails;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.Orders;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrdersDAO {
@@ -64,5 +67,41 @@ public class OrdersDAO {
             e.printStackTrace();
             return false;
         }
+    }
+    public static List<Orders> getAllOrdersWithPublicKey() {
+        List<Orders> list = new ArrayList<>();
+        String sql = "SELECT o.*, ku.userName, k.publicKey " +
+                "FROM Orders o " +
+                "JOIN KeyAccount k ON o.keyId = k.keyId " +
+                "JOIN AccountUsers ku ON o.userId = ku.userId";
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Orders order = new Orders();
+                order.setOrderId(rs.getInt("orderId"));
+                order.setOrderDate(rs.getString("orderDate"));
+                order.setTotalAmount(rs.getDouble("totalAmount"));
+                order.setDeliveryAddress(rs.getString("deliveryAddress"));
+                order.setSignature(rs.getString("signature"));
+                order.setHashData(rs.getString("hashData"));
+                order.setUserId(rs.getInt("userId"));
+                order.setKeyId(rs.getInt("keyId"));
+
+                AccountUsers user = new AccountUsers();
+                user.setUserName(rs.getString("userName"));
+
+                KeyAccount key = new KeyAccount();
+                key.setPublicKey(rs.getString("publicKey"));
+
+                order.setUser(user);
+                order.setKey(key);
+
+                list.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

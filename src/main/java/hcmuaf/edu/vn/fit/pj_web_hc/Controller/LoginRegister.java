@@ -73,7 +73,7 @@ public class LoginRegister extends HttpServlet {
                } else if (role == 2) {
                   // Điều hướng đến giao diện admin
                   System.out.println("Đăng nhập thành công! Vào trang admin");
-                  response.sendRedirect("Trang_Admin.jsp");
+                  response.sendRedirect("adminPage");
                 //  response.getWriter().println("<h1>Đăng nhập thành công! Vào Admin</h1>");
 
                }

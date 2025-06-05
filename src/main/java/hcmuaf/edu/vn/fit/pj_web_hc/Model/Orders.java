@@ -12,6 +12,9 @@ public class Orders {
     private int userId;
     private int keyId;
 
+    private AccountUsers user;
+    private KeyAccount key;
+
     // Constructors
     public Orders() {
     }
@@ -111,6 +114,21 @@ public class Orders {
 
     public void setKeyId(int keyId) {
         this.keyId = keyId;
+    }
+    public AccountUsers getUser() {
+        return user;
+    }
+
+    public void setUser(AccountUsers user) {
+        this.user = user;
+    }
+
+    public KeyAccount getKey() {
+        return key;
+    }
+
+    public void setKey(KeyAccount key) {
+        this.key = key;
     }
 
     @Override
