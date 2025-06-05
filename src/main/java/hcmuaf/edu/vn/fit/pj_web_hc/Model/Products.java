@@ -35,15 +35,17 @@ public class Products {
         this.categoryId = categoryId;
     }
 
-    public Products(int id, String imageURL, String name, int price) {
+    public Products(int id, String imageURL,String brandName, String name, int price) {
         this.productId = id;
         this.imageProduct = imageURL;
         this.productName = name;
         this.priceSell = price;
+        this.brandName = brandName;
     }
 
 
     //Contrustor cho sản phẩm mới
+
 
 
     public int getProductId() {
@@ -135,7 +137,8 @@ public class Products {
     }
 
     public int getQuantityStock() {
-        return ProductDao.getQuantityStock(this.productId);
+         ProductDao productDao = new ProductDao();
+         return productDao.getQuantityStock(productId);
     }
 
     @Override

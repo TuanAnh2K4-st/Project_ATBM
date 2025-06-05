@@ -17,25 +17,11 @@ public class ProductDao {
         List<Products> list = new ArrayList<>();
 
         String sql = "select * from products ORDER BY createAt DESC LIMIT 8";
-        try (Connection conn = new DBConnect().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = new DBConnect().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             int count = 0;
             while (rs.next()) { // Lặp qua tất cả các sản phẩm tìm thấy
                 count++;
-                list.add(new Products(
-                        rs.getInt("productId"),
-                        rs.getString("productName"),
-                        rs.getInt("priceBuy"),
-                        rs.getInt("priceSell"),
-                        rs.getString("productDetail"),
-                        rs.getString("imageProduct"),
-                        rs.getString("unitOfSure"),
-                        rs.getInt("hozandLevel"),
-                        rs.getString("brandName"),
-                        rs.getTimestamp("createAt"),
-                        rs.getInt("categoryId")
-                ));
+                list.add(new Products(rs.getInt("productId"), rs.getString("productName"), rs.getInt("priceBuy"), rs.getInt("priceSell"), rs.getString("productDetail"), rs.getString("imageProduct"), rs.getString("unitOfSure"), rs.getInt("hozandLevel"), rs.getString("brandName"), rs.getTimestamp("createAt"), rs.getInt("categoryId")));
             }
             System.out.println("Số sản phẩm truy vấn được: " + count);
         } catch (SQLException e) {
@@ -48,25 +34,11 @@ public class ProductDao {
     public List<Products> getProductsBySellId(int id) {
         List<Products> list = new ArrayList<>();
         String query = "select * from products where priceSell= ?";
-        try (
-                Connection conn = new DBConnect().getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = new DBConnect().getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                list.add(new Products(
-                        rs.getInt("productId"),
-                        rs.getString("productName"),
-                        rs.getInt("priceBuy"),
-                        rs.getInt("priceSell"),
-                        rs.getString("productDetail"),
-                        rs.getString("imageProduct"),
-                        rs.getString("unitOfSure"),
-                        rs.getInt("hozandLevel"),
-                        rs.getString("brandName"),
-                        rs.getTimestamp("createAt"),
-                        rs.getInt("categoryId")
-                ));
+                list.add(new Products(rs.getInt("productId"), rs.getString("productName"), rs.getInt("priceBuy"), rs.getInt("priceSell"), rs.getString("productDetail"), rs.getString("imageProduct"), rs.getString("unitOfSure"), rs.getInt("hozandLevel"), rs.getString("brandName"), rs.getTimestamp("createAt"), rs.getInt("categoryId")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,25 +49,11 @@ public class ProductDao {
     public List<Products> searchByName(String search) {
         List<Products> list = new ArrayList<>();
         String query = "select * from products where productName like ?";
-        try (
-                Connection conn = new DBConnect().getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = new DBConnect().getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, "%" + search + "%");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) { // Lặp qua tất cả các sản phẩm tìm thấy
-                list.add(new Products(
-                        rs.getInt("productId"),
-                        rs.getString("productName"),
-                        rs.getInt("priceBuy"),
-                        rs.getInt("priceSell"),
-                        rs.getString("productDetail"),
-                        rs.getString("imageProduct"),
-                        rs.getString("unitOfSure"),
-                        rs.getInt("hozandLevel"),
-                        rs.getString("brandName"),
-                        rs.getTimestamp("createAt"),
-                        rs.getInt("categoryId")
-                ));
+                list.add(new Products(rs.getInt("productId"), rs.getString("productName"), rs.getInt("priceBuy"), rs.getInt("priceSell"), rs.getString("productDetail"), rs.getString("imageProduct"), rs.getString("unitOfSure"), rs.getInt("hozandLevel"), rs.getString("brandName"), rs.getTimestamp("createAt"), rs.getInt("categoryId")));
 
             }
         } catch (SQLException e) {
@@ -122,19 +80,7 @@ public class ProductDao {
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                products.add(new Products(
-                        rs.getInt("productId"),
-                        rs.getString("productName"),
-                        rs.getInt("priceBuy"),
-                        rs.getInt("priceSell"),
-                        rs.getString("productDetail"),
-                        rs.getString("imageProduct"),
-                        rs.getString("unitOfSure"),
-                        rs.getInt("hozandLevel"),
-                        rs.getString("brandName"),
-                        rs.getTimestamp("createAt"),
-                        rs.getInt("categoryId")
-                ));
+                products.add(new Products(rs.getInt("productId"), rs.getString("productName"), rs.getInt("priceBuy"), rs.getInt("priceSell"), rs.getString("productDetail"), rs.getString("imageProduct"), rs.getString("unitOfSure"), rs.getInt("hozandLevel"), rs.getString("brandName"), rs.getTimestamp("createAt"), rs.getInt("categoryId")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -180,19 +126,7 @@ public class ProductDao {
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                products.add(new Products(
-                        rs.getInt("productId"),
-                        rs.getString("productName"),
-                        rs.getInt("priceBuy"),
-                        rs.getInt("priceSell"),
-                        rs.getString("productDetail"),
-                        rs.getString("imageProduct"),
-                        rs.getString("unitOfSure"),
-                        rs.getInt("hozandLevel"),
-                        rs.getString("brandName"),
-                        rs.getTimestamp("createAt"),
-                        rs.getInt("categoryId")
-                ));
+                products.add(new Products(rs.getInt("productId"), rs.getString("productName"), rs.getInt("priceBuy"), rs.getInt("priceSell"), rs.getString("productDetail"), rs.getString("imageProduct"), rs.getString("unitOfSure"), rs.getInt("hozandLevel"), rs.getString("brandName"), rs.getTimestamp("createAt"), rs.getInt("categoryId")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -227,19 +161,7 @@ public class ProductDao {
             rs = s.executeQuery(query);
 
             if (rs.next()) {
-                return new Products(
-                        rs.getInt("productId"),
-                        rs.getString("productName"),
-                        rs.getInt("priceBuy"),
-                        rs.getInt("priceSell"),
-                        rs.getString("productDetail"),
-                        rs.getString("imageProduct"),
-                        rs.getString("unitOfSure"),
-                        rs.getInt("hozandLevel"),
-                        rs.getString("brandName"),
-                        rs.getTimestamp("createAt"),
-                        rs.getInt("categoryId")
-                );
+                return new Products(rs.getInt("productId"), rs.getString("productName"), rs.getInt("priceBuy"), rs.getInt("priceSell"), rs.getString("productDetail"), rs.getString("imageProduct"), rs.getString("unitOfSure"), rs.getInt("hozandLevel"), rs.getString("brandName"), rs.getTimestamp("createAt"), rs.getInt("categoryId"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -261,19 +183,8 @@ public class ProductDao {
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                relatedProducts.add(new Products(
-                        rs.getInt("productId"),  // Sửa id -> productId
-                        rs.getString("productName"),
-                        rs.getInt("priceBuy"),
-                        rs.getInt("priceSell"),
-                        rs.getString("productDetail"),
-                        rs.getString("imageProduct"),
-                        rs.getString("unitOfSure"),
-                        rs.getInt("hozandLevel"),
-                        rs.getString("brandName"),
-                        rs.getTimestamp("createAt"),
-                        rs.getInt("categoryId")
-                ));
+                relatedProducts.add(new Products(rs.getInt("productId"),  // Sửa id -> productId
+                        rs.getString("productName"), rs.getInt("priceBuy"), rs.getInt("priceSell"), rs.getString("productDetail"), rs.getString("imageProduct"), rs.getString("unitOfSure"), rs.getInt("hozandLevel"), rs.getString("brandName"), rs.getTimestamp("createAt"), rs.getInt("categoryId")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -281,26 +192,13 @@ public class ProductDao {
         return relatedProducts;
     }
 
-    public static List<Products> getAllProducts() {
+    public List<Products> getAllProducts() {
         List<Products> products = new ArrayList<>();
         String query = "SELECT * FROM products ";
-        try (
-                Connection conn = new DBConnect().getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query);) {
+        try (Connection conn = new DBConnect().getConnection(); PreparedStatement stmt = conn.prepareStatement(query);) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                products.add(new Products(rs.getInt("productId"),
-                        rs.getString("productName"),
-                        rs.getInt("priceBuy"),
-                        rs.getInt("priceSell"),
-                        rs.getString("productDetail"),
-                        rs.getString("imageProduct"),
-                        rs.getString("unitOfSure"),
-                        rs.getInt("hozandLevel"),
-                        rs.getString("brandName"),
-                        rs.getTimestamp("createAt"),
-                        rs.getInt("categoryId")
-                ));
+                products.add(new Products(rs.getInt("productId"), rs.getString("productName"), rs.getInt("priceBuy"), rs.getInt("priceSell"), rs.getString("productDetail"), rs.getString("imageProduct"), rs.getString("unitOfSure"), rs.getInt("hozandLevel"), rs.getString("brandName"), rs.getTimestamp("createAt"), rs.getInt("categoryId")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -309,13 +207,10 @@ public class ProductDao {
         return products;
     }
 
-    public static int getQuantityStock(int productId) {
+    public int getQuantityStock(int productId) {
         String query = "SELECT * FROM stocks WHERE productId =" + productId;
         Statement s = DBConnect.get();
-        try (
-                Connection conn = new DBConnect().getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query);
-        ) {
+        try (Connection conn = new DBConnect().getConnection(); PreparedStatement stmt = conn.prepareStatement(query);) {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("quatityStock");
@@ -327,6 +222,79 @@ public class ProductDao {
         return 0;
     }
 
+    public void add(Products products) {
+        String query = "INSERT INTO products (productId, productName, priceBuy, priceSell, productDetail, imageProduct, unitOfSure, hozandLevel, brandName, createAt, categoryId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
 
+            statement.setInt(1, products.getProductId());
 
+            if (products.getProductName() != null) {
+                statement.setString(2, products.getProductName());
+            } else {
+                statement.setNull(2, Types.VARCHAR);
+            }
+
+            statement.setInt(3, products.getPriceBuy());
+            statement.setInt(4, products.getPriceSell());
+
+            if (products.getProductDetail() != null) {
+                statement.setString(5, products.getProductDetail());
+            } else {
+                statement.setNull(5, Types.VARCHAR);
+            }
+
+            if (products.getImageProduct() != null) {
+                statement.setString(6, products.getImageProduct());
+            } else {
+                statement.setNull(6, Types.VARCHAR);
+            }
+
+            if (products.getUnitOfSure() != null) {
+                statement.setString(7, products.getUnitOfSure());
+            } else {
+                statement.setNull(7, Types.VARCHAR);
+            }
+
+            statement.setInt(8, products.getHozandLevel());
+
+            if (products.getBrandName() != null) {
+                statement.setString(9, products.getBrandName());
+            } else {
+                statement.setNull(9, Types.VARCHAR);
+            }
+
+            if (products.getCreateAt() != null) {
+                statement.setTimestamp(10, products.getCreateAt());
+            } else {
+                statement.setNull(10, Types.TIMESTAMP);
+            }
+
+            statement.setInt(11, products.getCategoryId());
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("Không có bản ghi nào được chèn.");
+            } else {
+                System.out.println("Đã chèn thành công " + rowsAffected + " bản ghi.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi SQL: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Đã xảy ra lỗi khi chèn dữ liệu vào cơ sở dữ liệu", e);
+        }
+    }
+
+    public void deleteById(int idProducts) {
+        String query = "DELETE FROM products WHERE productId = ?";
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, idProducts);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
+
