@@ -68,9 +68,7 @@
     <h2 class="mb-4">Quản lý khóa</h2>
 
     <!-- Nút tải file publicKey -->
-    <div class="mb-3">
-        <a href="img/Tool_GK_ATBM.exe" class="btn btn-secondary" download>Tải file khóa công khai</a>
-    </div>
+    <a href="download?filename=Tool_Sign.exe" class="btn btn-secondary">Tải file khóa công khai</a>
 
     <form method="post" action="managerKey" id="saveKeyForm">
         <label for="textInput" class="form-label">Nhập chuỗi khóa công khai mới:</label>

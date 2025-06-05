@@ -89,4 +89,31 @@ public class KeyAccountDAO {
         }
         return false;
     }
+    // Lấy 1 KeyAccount theo keyId
+    public static KeyAccount getKeyById(int keyId) {
+        String sql = "SELECT * FROM keyaccount WHERE keyId = ?";
+
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, keyId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                KeyAccount key = new KeyAccount();
+                key.setKeyId(rs.getInt("keyId"));
+                key.setPublicKey(rs.getString("publicKey"));
+                Date timeUpDate = rs.getDate("timeUp");
+                key.setTimeUp(timeUpDate != null ? timeUpDate.toString() : null);
+                key.setStatus(KeyStatus.valueOf(rs.getString("status")));
+                key.setUserId(rs.getInt("userId"));
+                return key;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
