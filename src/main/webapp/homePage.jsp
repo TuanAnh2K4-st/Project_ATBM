@@ -17,12 +17,39 @@
   <link rel="stylesheet" href="css/header.css" />
   <link rel="stylesheet" href="css/footer.css" />
   <link rel="stylesheet" href="css/homePage.css" />
+  <script>
+    $(document).ready(function() {
+      $(".next").click(function() {
+        let productList = $(this).siblings(".product-list");
+        productList.animate({scrollLeft: '+=300'}, 400);
+      });
+
+      $(".prev").click(function() {
+        let productList = $(this).siblings(".product-list");
+        productList.animate({scrollLeft: '-=300'}, 400);
+      });
+    });
+  </script>
   <!-- Các link CSS, JS ở đây -->
 </head>
 <body>
 <%--Header--%>
 <jsp:include page="header.jsp" />
-
+<%
+  String successMessage = (String) session.getAttribute("successMessage");
+  if (successMessage != null) {
+%>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <i class="fas fa-check-circle" style="color: green;"></i>
+  <%= successMessage %>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="this.parentElement.style.display='none';">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<%
+    session.removeAttribute("successMessage");
+  }
+%>
 <!-- Hiển thị thông báo thành công nếu có -->
 <% if (request.getAttribute("successMessage") != null) { %>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -48,9 +75,6 @@
   <div class="box">
     <div class="boxNew">
       <h3>SẢN PHẨM MỚI</h3>
-      <button class="prev">
-        <i class="fa-solid fa-circle-chevron-left fa-lg" style="color: #2693E0;"></i>
-      </button>
       <div class="product-list" >
 
         <%
@@ -79,7 +103,6 @@
           }
         %>
       </div>
-      <button class="next"><i class="fa-solid fa-circle-chevron-right fa-lg" style="color: #2693E0;"></i></button>
     </div>
     <!-- Thêm box cho sản phẩm nổi bật và video giới thiệu -->
     <div class="highlight-video-section" style="display: flex; padding: 20px;">
@@ -129,21 +152,6 @@
 </div>
 <%--Footer--%>
 <jsp:include page="footer.jsp" />
-<script>
-  const productList = document.querySelector(".product-list");
-  const btnNext = document.querySelector(".boxNew .next");
-  const btnPrev = document.querySelector(".boxNew .prev");
 
-  const productCardWidth = 150 + 16; // 150px width + 16px gap, điều chỉnh nếu khác
-  const scrollAmount = productCardWidth * 7; // cuộn 7 sản phẩm
-
-  btnNext.addEventListener("click", () => {
-    productList.scrollBy({ left: scrollAmount, behavior: "smooth" });
-  });
-
-  btnPrev.addEventListener("click", () => {
-    productList.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-  });
-</script>
 </body>
 </html>
