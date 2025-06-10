@@ -16,8 +16,15 @@ public class ProductDao {
 
         List<Products> list = new ArrayList<>();
 
+<<<<<<< Updated upstream
         String sql = "select * from products ORDER BY createAt DESC LIMIT 8";
         try (Connection conn = new DBConnect().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+=======
+        String sql = "select * from products ORDER BY createAt DESC LIMIT 7";
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+>>>>>>> Stashed changes
             int count = 0;
             while (rs.next()) { // Lặp qua tất cả các sản phẩm tìm thấy
                 count++;
@@ -34,7 +41,13 @@ public class ProductDao {
     public List<Products> getProductsBySellId(int id) {
         List<Products> list = new ArrayList<>();
         String query = "select * from products where priceSell= ?";
+<<<<<<< Updated upstream
         try (Connection conn = new DBConnect().getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+=======
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+>>>>>>> Stashed changes
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -49,7 +62,13 @@ public class ProductDao {
     public List<Products> searchByName(String search) {
         List<Products> list = new ArrayList<>();
         String query = "select * from products where productName like ?";
+<<<<<<< Updated upstream
         try (Connection conn = new DBConnect().getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+=======
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+>>>>>>> Stashed changes
             stmt.setString(1, "%" + search + "%");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) { // Lặp qua tất cả các sản phẩm tìm thấy
@@ -192,6 +211,7 @@ public class ProductDao {
         return relatedProducts;
     }
 
+<<<<<<< Updated upstream
     public List<Products> getAllProducts() {
         List<Products> products = new ArrayList<>();
         String query = "SELECT * FROM products ";
@@ -294,6 +314,52 @@ public class ProductDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+=======
+    public static List<Products> getAllProducts() {
+        List<Products> products = new ArrayList<>();
+        String query = "SELECT * FROM products";
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                products.add(new Products(
+                        rs.getInt("productId"),
+                        rs.getString("productName"),
+                        rs.getInt("priceBuy"),
+                        rs.getInt("priceSell"),
+                        rs.getString("productDetail"),
+                        rs.getString("imageProduct"),
+                        rs.getString("unitOfSure"),
+                        rs.getInt("hozandLevel"),
+                        rs.getString("brandName"),
+                        rs.getTimestamp("createAt"),
+                        rs.getInt("categoryId")
+                ));
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return products;
+    }
+
+    public static int getQuantityOfProduct(int productId) {
+        int quantity = 0;
+        String query = "SELECT quatityStock FROM stocks WHERE productId = ?";
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return rs.getInt("quatityStock");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantity;
+>>>>>>> Stashed changes
     }
 }
 
