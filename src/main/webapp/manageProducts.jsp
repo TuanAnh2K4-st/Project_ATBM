@@ -1,3 +1,9 @@
+<%@ page import="hcmuaf.edu.vn.fit.pj_web_hc.Model.Orders" %>
+<%@ page import="java.util.List" %>
+<%@ page import="hcmuaf.edu.vn.fit.pj_web_hc.Model.KeyAccount" %>
+<%@ page import="hcmuaf.edu.vn.fit.pj_web_hc.Model.AccountUsers" %>
+<%@ page import="java.util.Map" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--Chúng ta có thể đặt các tệp JSP ở bất kỳ vị trí nào trong tệp WAR, tuy nhiên nếu chúng ta đặt nó bên trong thư mục WEB-INF,
@@ -28,19 +34,19 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
         </div>
         <nav>
             <ul>
-                <li><a href="#dashboard" onclick="showSection('dashboard')"><i class="fa fa-chart-line"></i> Bảng điều
+                <li><a href="#"><i class="fa fa-chart-line"></i> Bảng điều
                     khiển</a></li>
-                <li><a href="admin-products" onclick="showSection('products')"><i class="fa fa-box"></i> Quản lý Sản phẩm</a>
+                <li><a href="admin-products"><i class="fa fa-box"></i> Quản lý Sản phẩm</a>
                 </li>
-                <li><a href="admin-orders" onclick="showSection('orders')"><i class="fa fa-shopping-cart"></i> Quản lý Đơn
+                <li><a href="admin-orders"><i class="fa fa-shopping-cart"></i> Quản lý Đơn
                     hàng</a></li>
-                <li><a href="admin-customers" onclick="showSection('customers')"><i class="fa fa-users"></i> Quản lý Khách
+                <li><a href="admin-customers"><i class="fa fa-users"></i> Quản lý Khách
                     hàng</a></li>
-                <li><a href="admin-inventory" onclick="showSection('inventory')"><i class="fa fa-warehouse"></i> Quản lý Kho</a>
+                <li><a href="admin-inventory"><i class="fa fa-warehouse"></i> Quản lý Kho</a>
                 </li>
-                <li><a href="admin-discount" onclick="showSection('discount')"><i class="fa-sharp fa-solid fa-file"></i> Quản lý mã giảm giá</a></li>
-                <li><a href="admin-settings" onclick="showSection('settings')"><i class="fa fa-cogs"></i> Cài Đặt</a></li>
-                <li><a href="admin-users" onclick="showSection('users')"><i class="fa-solid fa-user"></i> Tài khoản người dùng</a></li>
+                <li><a href="admin-discount"><i class="fa-sharp fa-solid fa-file"></i> Quản lý mã giảm giá</a></li>
+                <li><a href="admin-settings"><i class="fa fa-cogs"></i> Cài Đặt</a></li>
+                <li><a href="admin-users"><i class="fa-solid fa-user"></i> Tài khoản người dùng</a></li>
 
             </ul>
         </nav>
@@ -48,8 +54,8 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
 </div>
 <!-- Main Content -->
 <main class="content">
-    <section id="products" class="product-section">
-        <div class="container"style="background: #b3d4fc;box-shadow: none">
+    <div id="products" class="product-section">
+        <div class="container" style="background: #b3d4fc;box-shadow: none">
             <h2>Quản lý Sản phẩm</h2>
             <div class="product-list">
                 <div class="card">
@@ -67,31 +73,20 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Hóa chất A</td>
-                            <td>HC001</td>
-                            <td><img src="https://hoachatthinghiem.org/wp-content/uploads/2024/10/Sodium-Dodecylsulfonate-%E2%89%A597-AR-Chai-250G-Xilong-Cas-2386-53-0-768x768.jpg"
-                                     alt="Hóa chất A" style="width:50px;"></td>
-                            <td>Xilong</td>
-                            <td>100</td>
-                            <td>750.000 VND</td>
-                            <td>
-                                <button>Sửa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Hóa chất B</td>
-                            <td>HC002</td>
-                            <td><img src="https://hoachatthinghiem.org/wp-content/uploads/2024/11/Glycine-100g-merck.jpg"
-                                     alt="Hóa chất B" style="width:50px;"></td>
-                            <td>Xilong</td>
-                            <td>40</td>
-                            <td>1.200.000 VND</td>
-                            <td>
-                                <button>Sửa</button>
-                            </td>
-                        </tr>
-
+                        <c:forEach items="${productViewList}" var="p">
+                            <tr>
+                                <td>${p.productName}</td>
+                                <td>${p.productId}</td>
+                                <td><img src="${p.imageProduct}"
+                                         alt="${p.productName}" style="width:50px;"></td>
+                                <td>${p.brandName}</td>
+                                <td>${p.quatityStock}</td>
+                                <td>${p.priceSell}</td>
+                                <td>
+                                    <button>Sửa</button>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -126,7 +121,9 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                                     <input type="text" id="productPrice" class="form-control" required></div>
 
                             </div>
-                            <div class="row"><button type="submit" class="btn btn-success">Thêm sản phẩm</button></div>
+                            <div class="row">
+                                <button type="submit" class="btn btn-success">Thêm sản phẩm</button>
+                            </div>
                         </form>
                     </div>
                     <div class="card">
@@ -141,7 +138,7 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </main>
 </body>
 </html>

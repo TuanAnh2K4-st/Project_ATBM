@@ -14,9 +14,9 @@ public class ProductDao {
         List<Products> list = new ArrayList<>();
 
         String sql = "select * from products ORDER BY createAt DESC LIMIT 7";
-        try(Connection conn = new DBConnect().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs= stmt.executeQuery()){
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
             int count = 0;
             while (rs.next()) { // Lặp qua tất cả các sản phẩm tìm thấy
                 count++;
@@ -35,7 +35,7 @@ public class ProductDao {
                 ));
             }
             System.out.println("Số sản phẩm truy vấn được: " + count);
-        }catch( SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
 
         }
@@ -46,10 +46,10 @@ public class ProductDao {
         List<Products> list = new ArrayList<>();
         String query = "select * from products where priceSell= ?";
         try (
-            Connection conn = new DBConnect().getConnection();
-            PreparedStatement stmt= conn.prepareStatement(query)){
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
-            ResultSet rs= stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 list.add(new Products(
                         rs.getInt("productId"),
@@ -65,7 +65,7 @@ public class ProductDao {
                         rs.getInt("categoryId")
                 ));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -76,9 +76,9 @@ public class ProductDao {
         String query = "select * from products where productName like ?";
         try (
                 Connection conn = new DBConnect().getConnection();
-                PreparedStatement stmt= conn.prepareStatement(query)){
-                stmt.setString(1, "%" + search+"%");
-                ResultSet rs= stmt.executeQuery();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + search + "%");
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) { // Lặp qua tất cả các sản phẩm tìm thấy
                 list.add(new Products(
                         rs.getInt("productId"),
@@ -95,7 +95,7 @@ public class ProductDao {
                 ));
 
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -276,5 +276,51 @@ public class ProductDao {
             e.printStackTrace();
         }
         return relatedProducts;
+    }
+
+    public static List<Products> getAllProducts() {
+        List<Products> products = new ArrayList<>();
+        String query = "SELECT * FROM products";
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                products.add(new Products(
+                        rs.getInt("productId"),
+                        rs.getString("productName"),
+                        rs.getInt("priceBuy"),
+                        rs.getInt("priceSell"),
+                        rs.getString("productDetail"),
+                        rs.getString("imageProduct"),
+                        rs.getString("unitOfSure"),
+                        rs.getInt("hozandLevel"),
+                        rs.getString("brandName"),
+                        rs.getTimestamp("createAt"),
+                        rs.getInt("categoryId")
+                ));
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return products;
+    }
+
+    public static int getQuantityOfProduct(int productId) {
+        int quantity = 0;
+        String query = "SELECT quatityStock FROM stocks WHERE productId = ?";
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return rs.getInt("quatityStock");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantity;
     }
 }
