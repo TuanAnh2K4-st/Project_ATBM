@@ -39,6 +39,13 @@ public class Products {
         this.productName = name;
         this.priceSell = price;
     }
+    public Products(int id ,String name, String brandName, int priceSell,String imageURL) {
+        this.productId = id;
+        this.productName = name;
+        this.brandName = brandName;
+        this.priceSell = priceSell;
+        this.imageProduct = imageURL;
+    }
 
 
     //Contrustor cho sản phẩm mới

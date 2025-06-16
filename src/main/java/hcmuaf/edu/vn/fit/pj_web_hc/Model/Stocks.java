@@ -1,12 +1,17 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.Model;
 
 public class Stocks {
-    private int stockId ;
-    private String stockName ;
-    private int quatityStock ;
-    private int minQuatity ;
-    private String updateStockAt ;
-    private int productId ;
+    private int stockId;
+    private String stockName;
+    private int quatityStock;
+    private int minQuatity;
+    private String updateStockAt;
+    private int productId;
+
+    public Stocks(int productId, int quatityStock) {
+        this.productId = productId;
+        this.quatityStock = quatityStock;
+    }
 
     public int getStockId() {
         return stockId;

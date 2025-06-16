@@ -93,38 +93,61 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                 <!-- Phần thêm và xóa sản phẩm -->
                 <div class="product-list">
                     <div class="card">
-                        <form>
+                        <form action="admin-products" method="post">
+                            <input type="hidden" name="action" value="add">
                             <h3>Thêm sản phẩm</h3>
                             <div class="form-group row">
-                                <label for="productCode" class="col-sm-2 col-form-label">Mã sản phẩm:</label>
+                                <label for="productCode" class="col-sm-2 col-form-label">Mã sản phẩm (Lưu ý : Mã sản
+                                    phẩm là duy nhất ):
+                                </label>
+                                <label for="note-productCode" class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-2">
-                                    <input type="number" id="productCode" class="form-control" required></div>
+                                    <input type="number" id="productCode" class="form-control" name="productId"
+                                           required></div>
 
                                 <label for="productName" class="col-sm-2 col-form-label">Tên sản phẩm:</label>
                                 <div class="col-sm-2">
-                                    <input type="text" id="productName" class="form-control" required></div>
+                                    <input type="text" id="productName" class="form-control" name="productName"
+                                           required></div>
 
                                 <label for="productBrand" class="col-sm-2 col-form-label">Hãng:</label>
                                 <div class="col-sm-2">
-                                    <input type="text" id="productBrand" class="form-control" required></div>
+                                    <input type="text" id="productBrand" class="form-control" name="brandName" required>
+                                </div>
 
                                 <label for="productStock" class="col-sm-2 col-form-label">Số lượng tồn kho:</label>
                                 <div class="col-sm-2">
-                                    <input type="number" id="productStock" class="form-control" required></div>
+                                    <input type="number" id="productStock" class="form-control" name="quantityStock"
+                                           required></div>
 
                                 <label for="productImage" class="col-sm-2 col-form-label">Hình ảnh sản phẩm:</label>
                                 <div class="col-sm-2">
-                                    <input type="file" id="productImage" class="form-control" required></div>
+                                    <input type="text" id="productImage" class="form-control" name="imageProduct"
+                                           required></div>
 
                                 <label for="productPrice" class="col-sm-2 col-form-label">Giá bán:</label>
                                 <div class="col-sm-2">
-                                    <input type="text" id="productPrice" class="form-control" required></div>
+                                    <input type="number" id="productPrice" class="form-control" name="priceSell"
+                                           required>
+                                </div>
 
                             </div>
                             <div class="row">
                                 <button type="submit" class="btn btn-success">Thêm sản phẩm</button>
                             </div>
                         </form>
+                        <%
+                            String message = (String) session.getAttribute("message");
+                            if (message != null) {
+                        %>
+                        <script>
+                            alert("<%= message %>");
+                        </script>
+                        <%
+                                session.removeAttribute("message"); // Xóa sau khi hiển thị để tránh hiển thị lại
+                            }
+                        %>
+
                     </div>
                     <div class="card">
                         <h3>Xóa sản phẩm</h3>

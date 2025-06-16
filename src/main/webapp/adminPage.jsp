@@ -36,7 +36,7 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
             <ul>
                 <li><a href="#dashboard" onclick="showSection('dashboard')"><i class="fa fa-chart-line"></i> Bảng điều
                     khiển</a></li>
-                <li><a href="admin-products"><i class="fa fa-box"></i> Quản lý Sản phẩm</a>
+                <li><a href="${pageContext.request.contextPath}/admin-products?action=list"><i class="fa fa-box"></i> Quản lý Sản phẩm</a>
                 </li>
                 <li><a href="admin-orders"><i class="fa fa-shopping-cart"></i> Quản lý Đơn
                     hàng</a></li>

@@ -2,6 +2,7 @@ package hcmuaf.edu.vn.fit.pj_web_hc.DAO;
 
 import hcmuaf.edu.vn.fit.pj_web_hc.DB.DBConnect;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.Products;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.Stocks;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -322,5 +323,42 @@ public class ProductDao {
             e.printStackTrace();
         }
         return quantity;
+    }
+
+    public static boolean insertProduct(Products product) {
+        boolean rowInserted = false;
+        String query = "INSERT INTO products (productId, productName,priceSell, imageProduct, brandName) VALUES (?, ?, ?, ?, ?);";
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, product.getProductId());
+            ps.setString(2, product.getProductName());
+            ps.setInt(3, product.getPriceSell());
+            ps.setString(4, product.getImageProduct());
+            ps.setString(5, product.getBrandName());
+            rowInserted = ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowInserted;
+
+    }
+
+    public static boolean insertStock(Stocks stock) {
+        boolean rowInserted = false;
+        String query = "INSERT INTO stocks (productId, quatityStock) VALUES (?, ?);";
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, stock.getProductId());
+            ps.setInt(2, stock.getQuatityStock());
+            rowInserted = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowInserted;
     }
 }
