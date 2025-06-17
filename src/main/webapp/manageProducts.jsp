@@ -83,13 +83,74 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                                 <td>${p.quatityStock}</td>
                                 <td>${p.priceSell}</td>
                                 <td>
-                                    <button>Sửa</button>
+                                    <form action="admin-products" method="post">
+                                        <input type="hidden" name="action" value="edit">
+                                        <input type="hidden" name="productId" value="${p.productId}">
+                                    <button type="submit" class="btn btn-warning">Sửa</button>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </div>
+                <!-- FORM SỬA -->
+                    <c:if test="${not empty productToEdit}">
+                        <h4>Chỉnh sửa sản phẩm</h4>
+                        <form action="admin-products" method="post">
+                            <input type="hidden" name="action" value="update">
+                            <input type="hidden" name="productId" value="${productToEdit.productId}">
+                            <div class="form-group">
+                                <!-- Tên sản phẩm -->
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="name">Tên sản phẩm:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" name="name" value="${productToEdit.productName}" required>
+                                    </div>
+                                </div>
+
+                                <!-- Hình ảnh -->
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="image">Hình ảnh:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="image" name="image" value="${productToEdit.imageProduct}">
+                                    </div>
+                                </div>
+
+                                <!-- Hãng -->
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="brand">Hãng:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="brand" name="brand" value="${productToEdit.brandName}">
+                                    </div>
+                                </div>
+
+                                <!-- Số lượng tồn kho -->
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="quantity">Số lượng tồn:</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" id="quantity" name="quantity" value="${productToEdit.quatityStock}" min="0">
+                                    </div>
+                                </div>
+
+                                <!-- Giá bán -->
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="price">Giá bán:</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" id="price" name="price" value="${productToEdit.priceSell}" min="0" step="0.01">
+                                    </div>
+                                </div>
+
+                                <!-- Nút submit -->
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </c:if>
+
                 <!-- Phần thêm và xóa sản phẩm -->
                 <div class="product-list">
                     <div class="card">

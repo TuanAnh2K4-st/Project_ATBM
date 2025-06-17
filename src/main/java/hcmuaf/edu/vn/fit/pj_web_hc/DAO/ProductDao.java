@@ -376,4 +376,40 @@ public class ProductDao {
         }
         return rowDeleted;
     }
+
+    public static boolean updateProductInfo(Products product) {
+        String query = "UPDATE products SET productName = ?,imageProduct = ?,brandName = ?,priceSell=? WHERE productId = ?;";
+        boolean rowUpdated = false;
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setString(1, product.getProductName());
+            ps.setString(2, product.getImageProduct());
+            ps.setString(3, product.getBrandName());
+            ps.setInt(4, product.getPriceSell());
+            ps.setInt(5, product.getProductId());
+            rowUpdated = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowUpdated;
+    }
+
+    public static boolean updateStock(Stocks stock) {
+        String query = "UPDATE stocks SET quatityStock = ? WHERE productId = ?;";
+        boolean rowUpdated = false;
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, stock.getQuatityStock());
+            ps.setInt(2, stock.getProductId());
+            rowUpdated = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowUpdated;
+    }
+
 }

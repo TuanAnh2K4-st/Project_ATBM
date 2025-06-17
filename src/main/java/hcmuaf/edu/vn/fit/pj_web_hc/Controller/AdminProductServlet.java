@@ -74,12 +74,41 @@ public class AdminProductServlet extends HttpServlet {
                 request.getSession().setAttribute("message", message);
                 response.sendRedirect("admin-products?action=list");
 
+            } else if ("edit".equals(action)) {
+                int productId = Integer.parseInt(request.getParameter("productId"));
+                Products product = ProductDao.getProductById(productId);
+                int quantity = ProductDao.getQuantityOfProduct(product.getProductId());
+                ProductViewModel productViewModel = new ProductViewModel(product.getProductName(), product.getProductId(), product.getImageProduct(), product.getBrandName(), quantity, product.getPriceSell());
+                request.setAttribute("productToEdit", productViewModel);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("manageProducts.jsp");
+                dispatcher.forward(request, response);
+            } else if ("update".equals(action)) {
+                int productId = Integer.parseInt(request.getParameter("productId"));
+                String productName = request.getParameter("name");
+                String imageProduct = request.getParameter("image");
+                String brandName = request.getParameter("brand");
+                int quantityStock = Integer.parseInt(request.getParameter("quantity"));
+                int priceSell = Integer.parseInt(request.getParameter("price"));
+
+                Products product = new Products(productId, productName, brandName, priceSell, imageProduct);
+                Stocks stocks = new Stocks(productId, quantityStock);
+
+                boolean updatedProductInfo = ProductDao.updateProductInfo(product);
+                boolean updatedStock = ProductDao.updateStock(stocks);
+
+                String message = "";
+                if (updatedProductInfo && updatedStock) {
+                    message = "Cập nhật sản phẩm thành công!";
+                } else {
+                    message = "Cập nhật sản phẩm thất bại!";
+                }
+                request.getSession().setAttribute("message", message);
+                response.sendRedirect("admin-products?action=list");
             }
         } catch (Exception e) {
             e.printStackTrace(); // in lỗi ra console
             request.getSession().setAttribute("message", "Đã xảy ra lỗi: " + e.getMessage());
             response.sendRedirect("admin-products?action=list");
-
         }
     }
 }
