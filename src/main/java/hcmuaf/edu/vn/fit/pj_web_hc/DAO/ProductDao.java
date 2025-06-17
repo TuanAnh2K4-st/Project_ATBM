@@ -361,4 +361,19 @@ public class ProductDao {
         }
         return rowInserted;
     }
+
+    public static boolean deleteProduct(int productId) {
+        boolean rowDeleted = false;
+        String query = "DELETE FROM products WHERE productId = ?;";
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, productId);
+            rowDeleted = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowDeleted;
+    }
 }

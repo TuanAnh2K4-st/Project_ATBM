@@ -97,10 +97,7 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                             <input type="hidden" name="action" value="add">
                             <h3>Thêm sản phẩm</h3>
                             <div class="form-group row">
-                                <label for="productCode" class="col-sm-2 col-form-label">Mã sản phẩm (Lưu ý : Mã sản
-                                    phẩm là duy nhất ):
-                                </label>
-                                <label for="note-productCode" class="col-sm-2 col-form-label"></label>
+                                <label for="productCode" class="col-sm-2 col-form-label">Mã sản phẩm:</label>
                                 <div class="col-sm-2">
                                     <input type="number" id="productCode" class="form-control" name="productId"
                                            required></div>
@@ -150,13 +147,15 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
 
                     </div>
                     <div class="card">
+                        <form action="admin-products" method="post" >
+                            <input type="hidden" name="action" value="delete">
                         <h3>Xóa sản phẩm</h3>
                         <div class="form-group row" style="display: flex; align-items: center">
                             <label for="productToDelete" class="col-sm-2 col-form-label">Mã sản phẩm để xóa:</label>
-                            <input type="number" id="productToDelete" class="form-control col-sm-5">
-                            <button class="btn btn-danger" id="deleteProductButton">Xóa sản phẩm</button>
-
+                            <input type="number" id="productToDelete" name="productId" class="form-control col-sm-5">
+                            <button type="submit" class="btn btn-danger" id="deleteProductButton">Xóa sản phẩm</button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

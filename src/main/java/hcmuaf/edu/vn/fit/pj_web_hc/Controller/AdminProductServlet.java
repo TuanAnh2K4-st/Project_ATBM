@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import java.util.List;
 public class AdminProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
         List<Products> products = ProductDao.getAllProducts();
         List<ProductViewModel> productViewList = new ArrayList<>();
         for (Products p : products) {
@@ -62,16 +60,26 @@ public class AdminProductServlet extends HttpServlet {
 
                 request.getSession().setAttribute("message", message); // Lưu thông báo vào session
                 response.sendRedirect("admin-products?action=list");
-                return;
 
 
             } else if ("delete".equals(action)) {
+                int productId = Integer.parseInt(request.getParameter("productId"));
+                boolean successDeleteProduct = ProductDao.deleteProduct(productId);
+                String message = "";
+                if (successDeleteProduct) {
+                    message = "Xóa sản phẩm thành công!";
+                } else {
+                    message = "Xóa sản phẩm thất bại!";
+                }
+                request.getSession().setAttribute("message", message);
+                response.sendRedirect("admin-products?action=list");
+
             }
         } catch (Exception e) {
             e.printStackTrace(); // in lỗi ra console
             request.getSession().setAttribute("message", "Đã xảy ra lỗi: " + e.getMessage());
             response.sendRedirect("admin-products?action=list");
-            return;
+
         }
     }
 }
