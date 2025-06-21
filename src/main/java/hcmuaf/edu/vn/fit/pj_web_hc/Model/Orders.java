@@ -1,5 +1,7 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.Model;
 
+import java.util.List;
+
 public class Orders {
     private int orderId;
     private String orderDate;
@@ -7,6 +9,8 @@ public class Orders {
     private double totalAmount;
     private String paymentMethod;
     private String deliveryAddress;
+    private String fullName;
+    private String phone;
     private String signature;
     private String hashData;
     private int userId;
@@ -15,12 +19,15 @@ public class Orders {
     private AccountUsers user;
     private KeyAccount key;
 
+    private String hashvalue;
+    private List<OrderDetails> orderDetails;
+
     // Constructors
     public Orders() {
     }
 
     public Orders(int orderId, String orderDate, OrdersStatus statusOrder, double totalAmount,
-                  String paymentMethod, String deliveryAddress, String signature, String hashData,
+                  String paymentMethod, String deliveryAddress, String fullName, String phone, String signature, String hashData,
                   int userId, int keyId) {
         this.orderId = orderId;
         this.orderDate = orderDate;
@@ -28,6 +35,8 @@ public class Orders {
         this.totalAmount = totalAmount;
         this.paymentMethod = paymentMethod;
         this.deliveryAddress = deliveryAddress;
+        this.fullName = fullName;
+        this.phone = phone;
         this.signature = signature;
         this.hashData = hashData;
         this.userId = userId;
@@ -84,6 +93,22 @@ public class Orders {
         this.deliveryAddress = deliveryAddress;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getSignature() {
         return signature;
     }
@@ -131,6 +156,19 @@ public class Orders {
         this.key = key;
     }
 
+    public String getHashvalue (){return hashvalue;}
+
+    public void setHashvalue (String hash){this.hashvalue = hash;}
+
+    public List<OrderDetails> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetails> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+
     @Override
     public String toString() {
         return "Orders{" +
@@ -140,6 +178,8 @@ public class Orders {
                 ", totalAmount=" + totalAmount +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", deliveryAddress='" + deliveryAddress + '\'' +
+                ", fullName'" + fullName + '\'' +
+                ", phone='" + phone + '\'' +
                 ", signature='" + signature + '\'' +
                 ", hashData='" + hashData + '\'' +
                 ", userId=" + userId +

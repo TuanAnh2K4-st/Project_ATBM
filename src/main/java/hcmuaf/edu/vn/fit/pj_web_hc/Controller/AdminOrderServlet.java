@@ -36,7 +36,7 @@ public class AdminOrderServlet extends HttpServlet {
                 // Kiểm tra chữ ký
                 Signature sig = Signature.getInstance("SHA1withRSA");
                 sig.initVerify(publicKey);
-                sig.update(order.getHashData().getBytes(StandardCharsets.UTF_8));
+                sig.update(order.getHashvalue().getBytes(StandardCharsets.UTF_8));
                 boolean isVerified = sig.verify(Base64.getDecoder().decode(order.getSignature()));
 
                 verificationResults.add(isVerified);

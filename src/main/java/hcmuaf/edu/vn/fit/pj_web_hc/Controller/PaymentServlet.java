@@ -54,6 +54,8 @@ public class PaymentServlet extends HttpServlet {
         order.setUserId(user.getUserId());
         order.setOrderDate(orderDate.toString());
         order.setStatusOrder(OrdersStatus.CONFIRMATIONING);
+        order.setFullName(fullName);
+        order.setPhone(phone);
         order.setPaymentMethod(paymentMethod);
         order.setDeliveryAddress(address);
         order.setTotalAmount(totalAmount);
@@ -64,7 +66,7 @@ public class PaymentServlet extends HttpServlet {
         // Tạo danh sách chi tiết đơn hàng
         List<OrderDetails> detailsList = new ArrayList<>();
         StringBuilder rawInfo = new StringBuilder();
-        rawInfo.append(user.getUserName())
+        rawInfo.append(fullName)
                 .append("|").append(address)
                 .append("|").append(phone)
                 .append("|").append(orderDate.toString());
@@ -72,6 +74,7 @@ public class PaymentServlet extends HttpServlet {
         for (CartItem item : cart.getItems()) {
             OrderDetails detail = new OrderDetails();
             detail.setProductId(item.getProduct().getProductId());
+            detail.setProductName(item.getProduct().getProductName());
             detail.setQuantity(item.getQuantity());
             detail.setUnitPrice(item.getProduct().getPriceSell());
             detail.setStatusDetail(OrderDetailsStatus.PENDING);
@@ -82,7 +85,7 @@ public class PaymentServlet extends HttpServlet {
                     .append("|").append(item.getProduct().getPriceSell());
         }
 
-        rawInfo.append("|").append(totalAmount);
+        rawInfo.append("|").append((int)totalAmount);
 
         // Hash thông tin đơn hàng
         String infoOrder = rawInfo.toString();

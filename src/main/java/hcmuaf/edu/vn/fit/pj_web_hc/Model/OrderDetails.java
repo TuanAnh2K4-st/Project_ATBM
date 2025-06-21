@@ -2,9 +2,10 @@ package hcmuaf.edu.vn.fit.pj_web_hc.Model;
 
 public class OrderDetails {
     private int orderDetailId ;
-    private double unitPrice ;
+    private int unitPrice ;
     private int quantity;
     private OrderDetailsStatus statusDetail ;
+    private String productName ;
     private int productId ;
     private int orderId ;
 
@@ -15,11 +16,12 @@ public class OrderDetails {
     }
 
     // Constructor có tham số
-    public OrderDetails(int orderDetailId, double unitPrice, int quantity, OrderDetailsStatus statusDetail, int productId, int orderId) {
+    public OrderDetails(int orderDetailId, int unitPrice, int quantity, OrderDetailsStatus statusDetail, String productName, int productId, int orderId) {
         this.orderDetailId = orderDetailId;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.statusDetail = statusDetail;
+        this.productName = productName;
         this.productId = productId;
         this.orderId = orderId;
     }
@@ -37,7 +39,7 @@ public class OrderDetails {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(int unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -55,6 +57,14 @@ public class OrderDetails {
 
     public void setStatusDetail(OrderDetailsStatus statusDetail) {
         this.statusDetail = statusDetail;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getProductId() {

@@ -31,4 +31,7 @@ public class MD5 {
             return null;
         }
     }
+//    public static void main(String[] args) {
+//        System.out.println("Hash là: " + hash("az|as|123456789|2025-06-12|Schenk & Hildebrandt Medium|2|80000|80000.0"));
+//    }
 }

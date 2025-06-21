@@ -69,7 +69,7 @@
         <td>${order.orderDate}</td>
         <td>${order.deliveryAddress}</td>
         <td><fmt:formatNumber value="${order.totalAmount}" type="number" groupingUsed="true" maxFractionDigits="0" /> VNĐ</td>
-        <td style="max-width: 300px; max-height: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${order.hashData}</td>
+        <td style="max-width: 300px; max-height: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${order.hashvalue}</td>
         <td style="max-width: 300px; max-height: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${order.signature}</td>
         <td>
           <c:choose>
