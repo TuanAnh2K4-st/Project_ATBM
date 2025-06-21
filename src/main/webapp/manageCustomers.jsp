@@ -78,24 +78,118 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                 </thead>
                 <tbody>
                 <c:forEach items="${customersList}" var="c">
-                <tr>
-                    <td>${c.customerId}</td>
-                    <td>${c.fullName}</td>
-                    <td>${c.email}</td>
-                    <td>${c.dateOfBirth}</td>
-                    <td>${c.phoneNum}</td>
-                    <td>${c.address}</td>
-                    <td>${c.gender}</td>
-                    <td>${c.job}</td>
-                    <td>
-                        <button class="btn-edit">Sửa</button>
-                        <button class="btn-delete">Xóa</button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>${c.customerId}</td>
+                        <td>${c.fullName}</td>
+                        <td>${c.email}</td>
+                        <td>${c.dateOfBirth}</td>
+                        <td>${c.phoneNum}</td>
+                        <td>${c.address}</td>
+                        <td>${c.gender}</td>
+                        <td>${c.job}</td>
+                        <td>
+                            <form action="admin-customers" method="post">
+                                <input type="hidden" name="action" value="edit">
+                                <input type="hidden" name="customerId" value="${c.customerId}">
+                                <button type="submit" class="btn-edit">Sửa</button>
+                            </form>
+                        </td>
+                        <td>
+                            <button class="btn-delete">Xóa</button>
+                        </td>
+                    </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
+        <div class="container">
+        <!-- FORM SỬA -->
+        <c:if test="${not empty customerToEdit}">
+            <h4>Chỉnh sửa thông tin khách hàng</h4>
+            <form action="admin-customers" method="post">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="customerId" value="${customerToEdit.customerId}">
+                <div class="form-group">
+                    <!-- Tên KH -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="name">Tên khách hàng</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="name" name="name"
+                                   value="${customerToEdit.fullName}" required>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="email">Email</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="email" name="email"
+                                   value="${customerToEdit.email}">
+                        </div>
+                    </div>
+
+                    <!-- Ngày sinh -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="date-of-birth">Ngày sinh</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="date-of-birth" name="dateOfBirth"
+                                   value="${customerToEdit.dateOfBirth}">
+                        </div>
+                    </div>
+
+                    <!-- SDT -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="phoneNum">SĐT</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="phoneNum" name="phoneNum"
+                                   value="${customerToEdit.phoneNum}">
+                        </div>
+                    </div>
+
+                    <!-- Địa chỉ -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="address">Địa chỉ</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="address" name="address"
+                                   value="${customerToEdit.address}">
+                        </div>
+                    </div>
+                    <!-- Giới tính -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="gender">Giới tính</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="gender" name="gender"
+                                   value="${customerToEdit.gender}">
+                        </div>
+                    </div>
+                    <!-- Công việc -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="job">Nghề</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="job" name="job" value="${customerToEdit.job}">
+                        </div>
+                    </div>
+                    <!-- Nút submit -->
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </c:if>
+    </div>
+        <%
+            String message = (String) session.getAttribute("message");
+            if (message != null) {
+        %>
+        <script>
+            alert("<%= message %>");
+        </script>
+        <%
+                session.removeAttribute("message"); // Xóa sau khi hiển thị để tránh hiển thị lại
+            }
+        %>
     </div>
 </main>
 </body>

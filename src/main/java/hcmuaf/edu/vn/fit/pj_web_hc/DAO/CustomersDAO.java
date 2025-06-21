@@ -1,11 +1,11 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.DAO;
 
 import hcmuaf.edu.vn.fit.pj_web_hc.DB.DBConnect;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.AccountUsers;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.Customers;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.Products;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +35,34 @@ public class CustomersDAO {
         }
         return customers;
     }
+    public static Customers getCustomerById(int customerId) {
+        Statement s = DBConnect.get();
+        if (s == null) return null;
+        ResultSet rs = null;
+
+        try {
+            String query = "SELECT * FROM customers WHERE customerId = " + customerId;
+            rs = s.executeQuery(query);
+
+            if (rs.next()) {
+                return new Customers(
+                        rs.getInt("customerId"),
+                        rs.getString("fullName"),
+                        rs.getString("dateOfBirth"),
+                        rs.getString("phoneNum"),
+                        rs.getString("address"),
+                        rs.getString("gender"),
+                        rs.getString("job"),
+                        rs.getString("updateAt"),
+                        rs.getString("workSpace"),
+                        rs.getInt("userId")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static String getEmailByUserId(int userId) {
         String email = "";
@@ -53,4 +81,40 @@ public class CustomersDAO {
         }
         return email;
     }
+    public static boolean updateCustomers(Customers customers) {
+        String query = "UPDATE customers SET fullName = ?,dateOfBirth = ?,phoneNum=?,address = ?,gender=?,job=? WHERE customerId = ?;";
+        boolean rowUpdated = false;
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setString(1, customers.getFullName());
+            ps.setString(2, customers.getDateOfBirth());
+            ps.setString(3, customers.getPhoneNum());
+            ps.setString(4, customers.getAddress());
+            ps.setString(5, customers.getGender());
+            ps.setString(6, customers.getJob());
+            ps.setInt(7, customers.getCustomerId());
+            rowUpdated = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowUpdated;
+    }
+    public static boolean updateEmail(AccountUsers accountUsers) {
+        String query = "UPDATE accountusers SET email = ? WHERE userId = ?;";
+        boolean rowUpdated = false;
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setString(1, accountUsers.getEmail());
+            ps.setInt(2, accountUsers.getUserId());
+            rowUpdated = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowUpdated;
+    }
+
 }

@@ -47,6 +47,10 @@ public class AccountUsers implements Serializable {
         this.email= email;
         this.passwordUser = passwordR ;
     }
+    public AccountUsers(int userId, String email){
+        this.userId = userId;
+        this.email = email;
+    }
 
     public int getUserId() {
         return userId;
