@@ -3,6 +3,7 @@ package hcmuaf.edu.vn.fit.pj_web_hc.DAO;
 import hcmuaf.edu.vn.fit.pj_web_hc.DB.DBConnect;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.AccountUsers;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.Customers;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.CustomersViewModel;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.Products;
 
 import java.sql.*;
@@ -35,6 +36,7 @@ public class CustomersDAO {
         }
         return customers;
     }
+
     public static Customers getCustomerById(int customerId) {
         Statement s = DBConnect.get();
         if (s == null) return null;
@@ -81,6 +83,7 @@ public class CustomersDAO {
         }
         return email;
     }
+
     public static boolean updateCustomers(Customers customers) {
         String query = "UPDATE customers SET fullName = ?,dateOfBirth = ?,phoneNum=?,address = ?,gender=?,job=? WHERE customerId = ?;";
         boolean rowUpdated = false;
@@ -101,6 +104,7 @@ public class CustomersDAO {
         }
         return rowUpdated;
     }
+
     public static boolean updateEmail(AccountUsers accountUsers) {
         String query = "UPDATE accountusers SET email = ? WHERE userId = ?;";
         boolean rowUpdated = false;
@@ -115,6 +119,37 @@ public class CustomersDAO {
             exception.printStackTrace();
         }
         return rowUpdated;
+    }
+
+    public static List<Customers> searchCustomers(String keyword) {
+        List<Customers> list = new ArrayList<>();
+        String query = "SELECT * FROM customers WHERE fullName LIKE ?";
+
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            String pattern = "%" + keyword + "%";
+            ps.setString(1, pattern);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Customers c = new Customers();
+                c.setCustomerId(rs.getInt("customerId"));
+                c.setFullName(rs.getString("fullName"));
+                c.setDateOfBirth(rs.getString("dateOfBirth"));
+                c.setPhoneNum(rs.getString("phoneNum"));
+                c.setAddress(rs.getString("address"));
+                c.setGender(rs.getString("gender"));
+                c.setJob(rs.getString("job"));
+                c.setWorkSpace(rs.getString("workSpace"));
+                c.setUpdateAt(rs.getString("updateAt"));
+                c.setUserId(rs.getInt("userId"));
+                list.add(c);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return list;
     }
 
 }

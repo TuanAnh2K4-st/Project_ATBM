@@ -58,10 +58,13 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
     <div id="customers">
         <div class="container">
             <h2>Quản lý thông tin khách hàng</h2>
-            <div class="search-container">
-                <input class="search" type="text" placeholder="Tìm kiếm khách hàng..."/>
-                <button class="button-search">Tìm kiếm</button>
-            </div>
+            <form action="admin-customers" method="get">
+                <div class="search-container">
+                    <input type="hidden" name="action" value="search"/>
+                    <input class="search" type="text" name="keyword" value="${param.keyword}" placeholder="Nhập tên khách hàng..."/>
+                    <button type="submit" class="button-search">Tìm kiếm</button>
+                </div>
+            </form>
             <table>
                 <thead>
                 <tr>
@@ -103,82 +106,83 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
             </table>
         </div>
         <div class="container">
-        <!-- FORM SỬA -->
-        <c:if test="${not empty customerToEdit}">
-            <h4>Chỉnh sửa thông tin khách hàng</h4>
-            <form action="admin-customers" method="post">
-                <input type="hidden" name="action" value="update">
-                <input type="hidden" name="customerId" value="${customerToEdit.customerId}">
-                <div class="form-group">
-                    <!-- Tên KH -->
+            <!-- FORM SỬA -->
+            <c:if test="${not empty customerToEdit}">
+                <h4>Chỉnh sửa thông tin khách hàng</h4>
+                <form action="admin-customers" method="post">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="customerId" value="${customerToEdit.customerId}">
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="name">Tên khách hàng</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" name="name"
-                                   value="${customerToEdit.fullName}" required>
+                        <!-- Tên KH -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="name">Tên khách hàng</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" name="name"
+                                       value="${customerToEdit.fullName}" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">Email</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="email" name="email"
-                                   value="${customerToEdit.email}">
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="email" name="email"
+                                       value="${customerToEdit.email}">
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Ngày sinh -->
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="date-of-birth">Ngày sinh</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="date-of-birth" name="dateOfBirth"
-                                   value="${customerToEdit.dateOfBirth}">
+                        <!-- Ngày sinh -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="date-of-birth">Ngày sinh</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="date-of-birth" name="dateOfBirth"
+                                       value="${customerToEdit.dateOfBirth}">
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- SDT -->
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="phoneNum">SĐT</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="phoneNum" name="phoneNum"
-                                   value="${customerToEdit.phoneNum}">
+                        <!-- SDT -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="phoneNum">SĐT</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="phoneNum" name="phoneNum"
+                                       value="${customerToEdit.phoneNum}">
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Địa chỉ -->
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="address">Địa chỉ</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="address" name="address"
-                                   value="${customerToEdit.address}">
+                        <!-- Địa chỉ -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="address">Địa chỉ</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="address" name="address"
+                                       value="${customerToEdit.address}">
+                            </div>
+                        </div>
+                        <!-- Giới tính -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="gender">Giới tính</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="gender" name="gender"
+                                       value="${customerToEdit.gender}">
+                            </div>
+                        </div>
+                        <!-- Công việc -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="job">Nghề</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="job" name="job"
+                                       value="${customerToEdit.job}">
+                            </div>
+                        </div>
+                        <!-- Nút submit -->
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            </div>
                         </div>
                     </div>
-                    <!-- Giới tính -->
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="gender">Giới tính</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="gender" name="gender"
-                                   value="${customerToEdit.gender}">
-                        </div>
-                    </div>
-                    <!-- Công việc -->
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="job">Nghề</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="job" name="job" value="${customerToEdit.job}">
-                        </div>
-                    </div>
-                    <!-- Nút submit -->
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </c:if>
-    </div>
+                </form>
+            </c:if>
+        </div>
         <%
             String message = (String) session.getAttribute("message");
             if (message != null) {
@@ -190,6 +194,13 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                 session.removeAttribute("message"); // Xóa sau khi hiển thị để tránh hiển thị lại
             }
         %>
+    </div>
+    <div>
+        <c:if test="${not empty message}">
+            <script>
+                alert("${message}");
+            </script>
+        </c:if>
     </div>
 </main>
 </body>

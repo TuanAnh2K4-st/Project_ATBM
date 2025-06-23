@@ -35,6 +35,9 @@ public class Customers {
         this.gender = gender;
         this.job = job;
     }
+    public Customers(){
+
+    }
 
     public int getCustomerId() {
         return customerId;
