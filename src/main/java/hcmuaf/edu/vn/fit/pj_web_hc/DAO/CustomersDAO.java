@@ -152,4 +152,19 @@ public class CustomersDAO {
         return list;
     }
 
+    public static boolean deleteCustomer(int customerId) {
+        String query = "DELETE FROM customers WHERE customerId = ?;";
+        boolean rowUpdated = false;
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, customerId);
+            rowUpdated = ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return rowUpdated;
+    }
 }

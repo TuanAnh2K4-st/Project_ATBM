@@ -19,55 +19,55 @@ import java.util.List;
 public class AdminCustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            String action = request.getParameter("action");
-            List<Customers> customers = new ArrayList<>();
-            String keyword = request.getParameter("keyword");
-            String message = "";
+        String action = request.getParameter("action");
+        List<Customers> customers = new ArrayList<>();
+        String keyword = request.getParameter("keyword");
+        String message = "";
 
-            if ("list".equals(action)) {
+        if ("list".equals(action)) {
+            customers = CustomersDAO.getAllCustomers();
+        } else if ("search".equals(action)) {
+            if (keyword == null || keyword.trim().isEmpty()) {
                 customers = CustomersDAO.getAllCustomers();
-            } else if ("search".equals(action)) {
-                if (keyword == null || keyword.trim().isEmpty()) {
+            } else {
+                customers = CustomersDAO.searchCustomers(keyword);
+                if (customers.isEmpty()) {
+                    message = "Không tìm thấy tên khách hàng!";
                     customers = CustomersDAO.getAllCustomers();
-                } else {
-                    customers = CustomersDAO.searchCustomers(keyword);
-                    if (customers.isEmpty()) {
-                        message = "Không tìm thấy tên khách hàng!";
-                        customers = CustomersDAO.getAllCustomers();
-                    }
                 }
             }
-
-            List<CustomersViewModel> customerViewModels = convertToViewModels(customers);
-            request.setAttribute("customersList", customerViewModels);
-
-            if (!message.isEmpty()) {
-                request.setAttribute("message", message);
-            }
-
-            request.getRequestDispatcher("manageCustomers.jsp").forward(request, response);
         }
 
-        private List<CustomersViewModel> convertToViewModels (List < Customers > customers) {
-            List<CustomersViewModel> list = new ArrayList<>();
-            for (Customers customer : customers) {
-                String email = CustomersDAO.getEmailByUserId(customer.getUserId());
-                list.add(new CustomersViewModel(
-                        customer.getCustomerId(),
-                        customer.getFullName(),
-                        email,
-                        customer.getDateOfBirth(),
-                        customer.getPhoneNum(),
-                        customer.getAddress(),
-                        customer.getGender(),
-                        customer.getJob()
-                ));
-            }
-            return list;
+        List<CustomersViewModel> customerViewModels = convertToViewModels(customers);
+        request.setAttribute("customersList", customerViewModels);
+
+        if (!message.isEmpty()) {
+            request.setAttribute("message", message);
         }
 
+        request.getRequestDispatcher("manageCustomers.jsp").forward(request, response);
+    }
 
-        @Override
+    private List<CustomersViewModel> convertToViewModels(List<Customers> customers) {
+        List<CustomersViewModel> list = new ArrayList<>();
+        for (Customers customer : customers) {
+            String email = CustomersDAO.getEmailByUserId(customer.getUserId());
+            list.add(new CustomersViewModel(
+                    customer.getCustomerId(),
+                    customer.getFullName(),
+                    email,
+                    customer.getDateOfBirth(),
+                    customer.getPhoneNum(),
+                    customer.getAddress(),
+                    customer.getGender(),
+                    customer.getJob()
+            ));
+        }
+        return list;
+    }
+
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String action = request.getParameter("action");
@@ -104,6 +104,17 @@ public class AdminCustomerServlet extends HttpServlet {
                     message = "Cập nhật thông tin thành công!";
                 } else {
                     message = "Cập nhật thông tin thất bại!";
+                }
+                request.getSession().setAttribute("message", message);
+                response.sendRedirect("admin-customers?action=list");
+            } else if ("delete".equals(action)) {
+                String message = "";
+                int customerId = Integer.parseInt(request.getParameter("customerId"));
+                boolean deletedCustomer = CustomersDAO.deleteCustomer(customerId);
+                if (deletedCustomer) {
+                    message = "Xóa thành công!";
+                } else {
+                    message = "Xóa thất bại!";
                 }
                 request.getSession().setAttribute("message", message);
                 response.sendRedirect("admin-customers?action=list");

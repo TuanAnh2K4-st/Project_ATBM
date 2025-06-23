@@ -40,7 +40,7 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                 </li>
                 <li><a href="admin-orders"><i class="fa fa-shopping-cart"></i> Quản lý Đơn
                     hàng</a></li>
-                <li><a href="admin-customers"><i class="fa fa-users"></i> Quản lý Khách
+                <li><a href="admin-customers?action=list"><i class="fa fa-users"></i> Quản lý Khách
                     hàng</a></li>
                 <li><a href="admin-inventory"><i class="fa fa-warehouse"></i> Quản lý Kho</a>
                 </li>

@@ -30,23 +30,23 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
             <ul>
                 <li><a href="#dashboard" onclick="showSection('dashboard')"><i class="fa fa-chart-line"></i> Bảng điều
                     khiển</a></li>
-                <li><a href="admin-products" onclick="showSection('products')"><i class="fa fa-box"></i> Quản lý Sản
+                <li><a href="admin-products"><i class="fa fa-box"></i> Quản lý Sản
                     phẩm</a>
                 </li>
-                <li><a href="admin-orders" onclick="showSection('orders')"><i class="fa fa-shopping-cart"></i> Quản lý
+                <li><a href="admin-orders"><i class="fa fa-shopping-cart"></i> Quản lý
                     Đơn
                     hàng</a></li>
-                <li><a href="admin-customers" onclick="showSection('customers')"><i class="fa fa-users"></i> Quản lý
+                <li><a href="admin-customers?action=list"><i class="fa fa-users"></i> Quản lý
                     Khách
                     hàng</a></li>
-                <li><a href="admin-inventory" onclick="showSection('inventory')"><i class="fa fa-warehouse"></i> Quản lý
+                <li><a href="admin-inventory"><i class="fa fa-warehouse"></i> Quản lý
                     Kho</a>
                 </li>
-                <li><a href="admin-discount" onclick="showSection('discount')"><i class="fa-sharp fa-solid fa-file"></i>
+                <li><a href="admin-discount"><i class="fa-sharp fa-solid fa-file"></i>
                     Quản lý mã giảm giá</a></li>
-                <li><a href="admin-settings" onclick="showSection('settings')"><i class="fa fa-cogs"></i> Cài Đặt</a>
+                <li><a href="admin-settings"><i class="fa fa-cogs"></i> Cài Đặt</a>
                 </li>
-                <li><a href="admin-users" onclick="showSection('users')"><i class="fa-solid fa-user"></i> Tài khoản
+                <li><a href="admin-users"><i class="fa-solid fa-user"></i> Tài khoản
                     người dùng</a></li>
 
             </ul>
@@ -58,10 +58,10 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
     <div id="customers">
         <div class="container">
             <h2>Quản lý thông tin khách hàng</h2>
-            <form action="admin-customers" method="get">
+            <form action="admin-customers" method="get" >
                 <div class="search-container">
                     <input type="hidden" name="action" value="search"/>
-                    <input class="search" type="text" name="keyword" value="${param.keyword}" placeholder="Nhập tên khách hàng..."/>
+                    <input class="search" type="text" name="keyword" value="${param.keyword}"  placeholder="Nhập tên khách hàng..."/>
                     <button type="submit" class="button-search">Tìm kiếm</button>
                 </div>
             </form>
@@ -98,7 +98,11 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                             </form>
                         </td>
                         <td>
-                            <button class="btn-delete">Xóa</button>
+                            <form action="admin-customers" method="post" onsubmit="return confirmDelete()">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="customerId" value="${c.customerId}">
+                            <button type="submit" class="btn-delete">Xóa</button>
+                            </form>
                         </td>
                     </tr>
                 </c:forEach>
@@ -203,5 +207,10 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
         </c:if>
     </div>
 </main>
+<script>
+    function confirmDelete() {
+        return confirm("Bạn có chắc chắn muốn xóa khách hàng này?");
+    }
+</script>
 </body>
 </html>
