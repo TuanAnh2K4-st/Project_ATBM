@@ -28,4 +28,30 @@ public class StocksDAO {
         }
         return 0;
     }
+    public boolean updateStockQuantity(int productId, int quantityToReduce) {
+        Statement s = DBConnect.get();
+        if (s == null) return false;
+
+        try {
+            // Cập nhật số lượng nếu còn đủ hàng
+            String queryCheck = "SELECT quatityStock FROM stocks WHERE productId = " + productId;
+            ResultSet rs = s.executeQuery(queryCheck);
+
+            if (rs.next()) {
+                int currentQuantity = rs.getInt("quatityStock");
+                if (currentQuantity < quantityToReduce) {
+                    System.out.println("Không đủ hàng trong kho.");
+                    return false;
+                }
+
+                String updateQuery = "UPDATE stocks SET quatityStock = quatityStock - " + quantityToReduce +
+                        ", updateStockAt = CURRENT_TIMESTAMP WHERE productId = " + productId;
+                int rowsAffected = s.executeUpdate(updateQuery);
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

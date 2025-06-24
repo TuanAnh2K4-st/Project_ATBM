@@ -5,6 +5,7 @@ import hcmuaf.edu.vn.fit.pj_web_hc.Model.AccountUsers;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.KeyAccount;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.OrderDetails;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.Orders;
+import hcmuaf.edu.vn.fit.pj_web_hc.Service.AuthorService;
 import hcmuaf.edu.vn.fit.pj_web_hc.Util.MD5;
 
 import java.sql.*;
@@ -124,11 +125,11 @@ public class OrdersDAO {
                 detail.setUnitPrice(rs.getInt("unitPrice"));
                 order.getOrderDetails().add(detail);
             }
-
             // Tính hash cho mỗi order sau khi đã có đủ chi tiết
             for (Orders order : ordersMap.values()) {
                 StringBuilder rawInfo = new StringBuilder();
-                rawInfo.append(order.getFullName())
+                rawInfo.append(order.getUser().getUserName())
+                        .append("|").append(order.getFullName())
                         .append("|").append(order.getDeliveryAddress())
                         .append("|").append(order.getPhone())
                         .append("|").append(order.getOrderDate());

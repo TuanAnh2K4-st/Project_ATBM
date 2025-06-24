@@ -66,7 +66,8 @@ public class PaymentServlet extends HttpServlet {
         // Tạo danh sách chi tiết đơn hàng
         List<OrderDetails> detailsList = new ArrayList<>();
         StringBuilder rawInfo = new StringBuilder();
-        rawInfo.append(fullName)
+        rawInfo.append(user.getUserName())
+                .append("|").append(fullName)
                 .append("|").append(address)
                 .append("|").append(phone)
                 .append("|").append(orderDate.toString());

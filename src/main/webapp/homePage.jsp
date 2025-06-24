@@ -69,9 +69,9 @@
 </div>
 </div>
 <div class="main-section">
-  <div class="labelSale">
-    <a href="Trang Khuyến mãi.jsp"><img src="img/Sale hóa chất.gif" height="800" width="418"/></a>
-  </div>
+<%--  <div class="labelSale">--%>
+<%--    <a href="Trang Khuyến mãi.jsp"><img src="img/Sale hóa chất.gif" height="800" width="418"/></a>--%>
+<%--  </div>--%>
   <div class="box">
     <div class="boxNew">
       <h3>SẢN PHẨM MỚI</h3>
