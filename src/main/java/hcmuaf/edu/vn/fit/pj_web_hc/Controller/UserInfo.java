@@ -57,7 +57,7 @@ public class UserInfo extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("Trang_thong_tin_user.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendRedirect("Trangdangnhap_dangky.jsp");
+            response.sendRedirect("loginregister");
         }
     }
 
@@ -116,7 +116,7 @@ public class UserInfo extends HttpServlet {
             session.setAttribute("user", currentUser );
             response.sendRedirect("Trang_thong_tin_user.jsp?success=AvatarUpdated");
         } else {
-            response.sendRedirect("Trangdangnhap_dangky.jsp");
+            response.sendRedirect("loginregister");
         }
     }
     @Action("logout")
@@ -125,7 +125,7 @@ public class UserInfo extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
-        response.sendRedirect("Trangdangnhap_dangky.jsp");
+        response.sendRedirect("loginregister");
         System.out.println("Đã đăng xuất");
     }
 
@@ -134,7 +134,7 @@ public class UserInfo extends HttpServlet {
         HttpSession session = request.getSession(false);
         AccountUsers currentUser  = (AccountUsers) session.getAttribute("user");
         if (currentUser == null) {
-            response.sendRedirect("Trangdangnhap_dangky.jsp");
+            response.sendRedirect("loginregister");
             return;
         }
         String oldPassword = request.getParameter("oldPassword");
@@ -176,7 +176,7 @@ public class UserInfo extends HttpServlet {
     //AccountUsers currentUser  = (AccountUsers) session.getAttribute("user");
     // Kiểm tra nếu userId không tồn tại
     if (userId == null) {
-        response.sendRedirect("Trangdangnhap_dangky.jsp");
+        response.sendRedirect("loginregister");
         return;
     }
     // Lấy Map chứa thông tin cá nhân bổ sung từ session, nếu chưa có thì tạo mới

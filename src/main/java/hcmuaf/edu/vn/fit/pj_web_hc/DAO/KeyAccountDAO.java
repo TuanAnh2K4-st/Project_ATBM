@@ -1,6 +1,7 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.DAO;
 
 import hcmuaf.edu.vn.fit.pj_web_hc.DB.DBConnect;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.AccountUsers;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.KeyAccount;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.KeyStatus;
 
@@ -8,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KeyAccountDAO {
 
@@ -115,5 +118,51 @@ public class KeyAccountDAO {
         }
 
         return null;
+    }
+    public static List<KeyAccount> getAllKeyAccounts() {
+        List<KeyAccount> list = new ArrayList<>();
+        String sql = "SELECT k.*, u.userName AS userName FROM keyaccount k JOIN AccountUsers u ON k.userId = u.userId";
+
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                KeyAccount key = new KeyAccount();
+                key.setKeyId(rs.getInt("keyId"));
+                key.setPublicKey(rs.getString("publicKey"));
+
+                Date timeUpDate = rs.getDate("timeUp");
+                key.setTimeUp(timeUpDate != null ? timeUpDate.toString() : null);
+
+                key.setStatus(KeyStatus.valueOf(rs.getString("status")));
+                key.setUserId(rs.getInt("userId"));
+                AccountUsers user = new AccountUsers();
+                user.setUserName(rs.getString("userName"));
+                key.setUser(user);
+
+                list.add(key);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public static void updateKeyStatus(int keyId, String newStatus) {
+        String sql = "UPDATE keyaccount SET status = ? WHERE keyId = ?";
+
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, newStatus);
+            ps.setInt(2, keyId);
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

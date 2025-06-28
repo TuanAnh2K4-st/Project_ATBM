@@ -1,0 +1,138 @@
+/* Cài đặt chung */
+html, body {
+    font-family: Tahoma, sans-serif;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    background-color: #0056b3;
+    color: white;
+    box-sizing: border-box;
+    height: 100vh;
+    padding: 20px;
+}
+
+.avatar {
+    background-color: #2693E0;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+.avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 10px 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+/* Container nội dung chính */
+.container {
+    flex-grow: 1;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Tiêu đề */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Bảng Key */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    table-layout: fixed;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Thiết lập độ rộng từng cột */
+th:nth-child(1), td:nth-child(1) { width: 50px; }     /* STT */
+th:nth-child(2), td:nth-child(2) { width: 150px; }    /* Tên người dùng */
+th:nth-child(3), td:nth-child(3) { width: 300px; font-size: 12px; word-break: break-all; } /* Public key */
+th:nth-child(4), td:nth-child(4) { width: 120px; }    /* Thời gian hết hạn */
+th:nth-child(5), td:nth-child(5) { width: 100px; }    /* Trạng thái */
+th:nth-child(6), td:nth-child(6) { width: 200px; }    /* Thao tác */
+
+/* Badge trạng thái */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.status-badge.active {
+    background-color: #28a745;
+}
+
+.status-badge.inactive {
+    background-color: #dc3545;
+}
+
+/* Nút chỉnh sửa */
+.btn-edit {
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+/* Form dropdown chỉnh trạng thái */
+form select {
+    padding: 4px 8px;
+    font-size: 14px;
+    margin-right: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}

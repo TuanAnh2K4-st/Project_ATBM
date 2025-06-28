@@ -6,6 +6,7 @@ public class KeyAccount {
     private String timeUp;
     private KeyStatus status; // Enum đại diện cho trạng thái
     private int userId;
+    private AccountUsers user;
 
     // Getter & Setter
 
@@ -48,6 +49,16 @@ public class KeyAccount {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    public AccountUsers getUser() {
+        return user;
+    }
+
+    public void setUser(AccountUsers user) {
+        this.user = user
+        ;
+    }
+
 
     @Override
     public String toString() {
