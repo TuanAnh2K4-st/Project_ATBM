@@ -1,5 +1,6 @@
 <%@ page import="hcmuaf.edu.vn.fit.pj_web_hc.Model.Products" %>
 <%@ page import="java.util.List" %>
+<%@ page import="hcmuaf.edu.vn.fit.pj_web_hc.DAO.StocksDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -63,6 +64,7 @@
         <p>Ngày đăng: <fmt:formatDate value="<%=product.getCreateAt()%>" pattern="dd/MM/yyyy"/></p>
         <p><strong>Thương hiệu:</strong> <%= product.getBrandName() %></p>
         <p><strong>Đơn vị tính:</strong> <%= product.getUnitOfSure() %></p>
+        <p><strong>Số lượng trong kho:</strong> <%= request.getAttribute("stockQuantity") %></p>
         <p><strong>Cấp độ bảo quản:</strong> <%= product.getHozandLevel() %></p>
         <form action="add-to-cart" method="post">
           <input type="hidden" name="productId" value="<%= product.getProductId() %>" />

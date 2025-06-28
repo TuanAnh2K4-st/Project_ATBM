@@ -1,5 +1,6 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.Controller;
 
+import hcmuaf.edu.vn.fit.pj_web_hc.DAO.StocksDAO;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.Products;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,6 +22,22 @@ public class CartController extends HttpServlet {
         String productImage = request.getParameter("productImage");
         int productPrice = Integer.parseInt(request.getParameter("productPrice"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+        // Kiểm tra tồn kho trước khi thêm vào giỏ
+        StocksDAO stocksDAO = new StocksDAO();
+        int availableStock = stocksDAO.getQuanityProductOnStocks(productId);
+
+        if (quantity > availableStock) {
+            response.getWriter().println("Không đủ hàng trong kho. Chỉ còn " + availableStock + " sản phẩm.");
+            return;
+        }
+
+        // Trừ số lượng tồn kho ngay (theo yêu cầu, dù tốt hơn là làm khi thanh toán)
+        boolean updated = stocksDAO.updateStockQuantity(productId, quantity);
+        if (!updated) {
+            response.getWriter().println("Không thể cập nhật tồn kho. Vui lòng thử lại.");
+            return;
+        }
 
         HttpSession session = request.getSession();
         List<Products> cart = (List<Products>) session.getAttribute("cart");

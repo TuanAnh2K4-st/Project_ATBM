@@ -62,17 +62,16 @@
 <% } %>
 <div class="row3">
   <div class="col-12 d-flex justify-content-center align-items-center">
-    <img src="img/HÓA CHẤT ĐA DẠNG.png" height="325" width="100%">
+    <img src="img/poster.jpg" height="435" width="940">
   </div>
   <div class="box1">
   </div>
 </div>
 </div>
 <div class="main-section">
-  <div class="labelSale">
-    <a href="Trang Khuyến mãi.jsp"><img src="img/Sale hóa chất.gif" height="800" width="418"/></a>
-  </div>
+
   <div class="box">
+
     <div class="boxNew">
       <h3>SẢN PHẨM MỚI</h3>
       <div class="product-list" >

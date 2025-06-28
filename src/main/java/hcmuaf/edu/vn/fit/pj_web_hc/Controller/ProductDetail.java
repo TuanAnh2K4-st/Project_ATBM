@@ -1,5 +1,6 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.Controller;
 
+import hcmuaf.edu.vn.fit.pj_web_hc.DAO.StocksDAO;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.Products;
 import hcmuaf.edu.vn.fit.pj_web_hc.Service.ProductService;
 import jakarta.servlet.ServletException;
@@ -36,6 +37,11 @@ public class ProductDetail extends HttpServlet {
             // Truyền thông tin sản phẩm vào request để sử dụng trong JSP
             request.setAttribute("product", product); // Đổi tên attribute ở đây
             List<Products> relatedProducts = service.getRelatedProducts(product);
+            // Lấy quanity từ Stock của ProductId đó
+            int productId = product.getProductId();
+            StocksDAO dao = new StocksDAO();
+            int quantity = dao.getQuanityProductOnStocks(productId);
+            request.setAttribute("stockQuantity", quantity);
 
             request.setAttribute("product", product);
             request.setAttribute("relatedProducts", relatedProducts); // Truyền danh sách sản phẩm liên quan

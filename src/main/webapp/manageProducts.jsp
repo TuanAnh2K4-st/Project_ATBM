@@ -32,16 +32,16 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                     khiển</a></li>
                 <li><a href="admin-products" onclick="showSection('products')"><i class="fa fa-box"></i> Quản lý Sản phẩm</a>
                 </li>
-                <li><a href="admin-orders" onclick="showSection('orders')"><i class="fa fa-shopping-cart"></i> Quản lý Đơn
+                <li><a href="admin-orders"><i class="fa fa-shopping-cart"></i> Quản lý Đơn
                     hàng</a></li>
-                <li><a href="admin-customers" onclick="showSection('customers')"><i class="fa fa-users"></i> Quản lý Khách
+                <li><a href="#customers" onclick="showSection('customers')"><i class="fa fa-users"></i> Quản lý Khách
                     hàng</a></li>
-                <li><a href="admin-inventory" onclick="showSection('inventory')"><i class="fa fa-warehouse"></i> Quản lý Kho</a>
+                <li><a href="#inventory" onclick="showSection('inventory')"><i class="fa fa-warehouse"></i> Quản lý Kho</a>
                 </li>
-                <li><a href="admin-discount" onclick="showSection('discount')"><i class="fa-sharp fa-solid fa-file"></i> Quản lý mã giảm giá</a></li>
-                <li><a href="admin-settings" onclick="showSection('settings')"><i class="fa fa-cogs"></i> Cài Đặt</a></li>
+                <li><a href="#discount" onclick="showSection('discount')"><i class="fa-sharp fa-solid fa-file"></i> Quản lý mã giảm giá</a></li>
+                <li><a href="admin-key"><i class="fa fa-cogs"></i> Quản lý keyaccount</a></li>
                 <li><a href="admin-users" onclick="showSection('users')"><i class="fa-solid fa-user"></i> Tài khoản người dùng</a></li>
-
+                <li><a href="logout" onclick="showSection('settings')"><i class="fa fa-cogs"></i> Logout</a></li>
             </ul>
         </nav>
     </div>
