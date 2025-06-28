@@ -64,7 +64,7 @@
 
             <!-- Lọc theo Thể tích -->
             <div class="filter-group" style="margin-bottom: 15px;">
-                <label for="volume" style="font-weight: 600; display: block; margin-bottom: 5px; color: #555;">Thể tích:</label>
+                <label for="volume" style="font-weight: 600; display: block; margin-bottom: 5px; color: #555;">Loại:</label>
                 <select name="volume" id="volume" style="
                 width: 100%;
                 padding: 8px;
@@ -73,8 +73,8 @@
                 font-size: 14px;
             ">
                     <option value="">Tất cả</option>
-                    <option value="Lít">Lít</option>
-                    <option value="kg">kg</option>
+                    <option value="Hộp">Dụng cụ sơ cứu </option>
+                    <option value="Máy">Máy y tế </option>
                 </select>
             </div>
 

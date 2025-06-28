@@ -1,10 +1,7 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.DAO;
 
 import hcmuaf.edu.vn.fit.pj_web_hc.DB.DBConnect;
-import hcmuaf.edu.vn.fit.pj_web_hc.Model.AccountUsers;
-import hcmuaf.edu.vn.fit.pj_web_hc.Model.KeyAccount;
-import hcmuaf.edu.vn.fit.pj_web_hc.Model.OrderDetails;
-import hcmuaf.edu.vn.fit.pj_web_hc.Model.Orders;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.*;
 import hcmuaf.edu.vn.fit.pj_web_hc.Service.AuthorService;
 import hcmuaf.edu.vn.fit.pj_web_hc.Util.MD5;
 
@@ -13,6 +10,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static hcmuaf.edu.vn.fit.pj_web_hc.DAO.OrderDetailsDAO.getOrderDetailsByOrderId;
 
 public class OrdersDAO {
 
@@ -153,6 +152,57 @@ public class OrdersDAO {
         }
 
         return new ArrayList<>(ordersMap.values());
+    }
+    public static List<Orders> getAllOrdersWithDetails() {
+        List<Orders> ordersList = new ArrayList<>();
+
+        String sql = "SELECT o.*, a.userName, k.publicKey " +
+                "FROM orders o " +
+                "JOIN account_users a ON o.userId = a.userId " +
+                "JOIN keyaccount k ON o.keyId = k.keyId " +
+                "ORDER BY o.orderDate DESC";
+
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Orders order = new Orders();
+                order.setOrderId(rs.getInt("orderId"));
+                order.setOrderDate(rs.getString("orderDate"));
+                order.setStatusOrder(OrdersStatus.fromString(rs.getString("statusOrder")));
+                order.setTotalAmount(rs.getDouble("totalAmount"));
+                order.setPaymentMethod(rs.getString("paymentMethod"));
+                order.setDeliveryAddress(rs.getString("deliveryAddress"));
+                order.setSignature(rs.getString("signature"));
+                order.setHashData(rs.getString("hashData"));
+                order.setUserId(rs.getInt("userId"));
+                order.setKeyId(rs.getInt("keyId"));
+                order.setFullName(rs.getString("fullName"));
+                order.setPhone(rs.getString("phone"));
+
+                // Set user (chỉ cần userName để hiển thị)
+                AccountUsers user = new AccountUsers();
+                user.setUserName(rs.getString("userName"));
+                order.setUser(user);
+
+                // Set key
+                KeyAccount key = new KeyAccount();
+                key.setPublicKey(rs.getString("publicKey"));
+                order.setKey(key);
+
+                // Lấy danh sách chi tiết đơn hàng
+                List<OrderDetails> details = getOrderDetailsByOrderId(order.getOrderId());
+                order.setOrderDetails(details);
+
+                ordersList.add(order);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ordersList;
     }
 
 }

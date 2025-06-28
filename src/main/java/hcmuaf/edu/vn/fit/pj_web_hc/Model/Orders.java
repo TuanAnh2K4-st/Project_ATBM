@@ -145,7 +145,8 @@ public class Orders {
     }
 
     public void setUser(AccountUsers user) {
-        this.user = user;
+        this.user = user
+        ;
     }
 
     public KeyAccount getKey() {
