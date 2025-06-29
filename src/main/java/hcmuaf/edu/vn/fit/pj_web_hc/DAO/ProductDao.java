@@ -2,6 +2,7 @@ package hcmuaf.edu.vn.fit.pj_web_hc.DAO;
 
 import hcmuaf.edu.vn.fit.pj_web_hc.DB.DBConnect;
 import hcmuaf.edu.vn.fit.pj_web_hc.Model.Products;
+import hcmuaf.edu.vn.fit.pj_web_hc.Model.Stocks;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ public class ProductDao {
         List<Products> list = new ArrayList<>();
 
         String sql = "select * from products ORDER BY createAt DESC LIMIT 7";
-        try(Connection conn = new DBConnect().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs= stmt.executeQuery()){
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
             int count = 0;
             while (rs.next()) { // Lặp qua tất cả các sản phẩm tìm thấy
                 count++;
@@ -35,7 +36,7 @@ public class ProductDao {
                 ));
             }
             System.out.println("Số sản phẩm truy vấn được: " + count);
-        }catch( SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
 
         }
@@ -46,10 +47,10 @@ public class ProductDao {
         List<Products> list = new ArrayList<>();
         String query = "select * from products where priceSell= ?";
         try (
-            Connection conn = new DBConnect().getConnection();
-            PreparedStatement stmt= conn.prepareStatement(query)){
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
-            ResultSet rs= stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 list.add(new Products(
                         rs.getInt("productId"),
@@ -65,7 +66,7 @@ public class ProductDao {
                         rs.getInt("categoryId")
                 ));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -76,9 +77,9 @@ public class ProductDao {
         String query = "select * from products where productName like ?";
         try (
                 Connection conn = new DBConnect().getConnection();
-                PreparedStatement stmt= conn.prepareStatement(query)){
-                stmt.setString(1, "%" + search+"%");
-                ResultSet rs= stmt.executeQuery();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + search + "%");
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) { // Lặp qua tất cả các sản phẩm tìm thấy
                 list.add(new Products(
                         rs.getInt("productId"),
@@ -95,7 +96,7 @@ public class ProductDao {
                 ));
 
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -277,4 +278,138 @@ public class ProductDao {
         }
         return relatedProducts;
     }
+
+    public static List<Products> getAllProducts() {
+        List<Products> products = new ArrayList<>();
+        String query = "SELECT * FROM products";
+        try (Connection conn = new DBConnect().getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                products.add(new Products(
+                        rs.getInt("productId"),
+                        rs.getString("productName"),
+                        rs.getInt("priceBuy"),
+                        rs.getInt("priceSell"),
+                        rs.getString("productDetail"),
+                        rs.getString("imageProduct"),
+                        rs.getString("unitOfSure"),
+                        rs.getInt("hozandLevel"),
+                        rs.getString("brandName"),
+                        rs.getTimestamp("createAt"),
+                        rs.getInt("categoryId")
+                ));
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return products;
+    }
+
+    public static int getQuantityOfProduct(int productId) {
+        int quantity = 0;
+        String query = "SELECT quatityStock FROM stocks WHERE productId = ?";
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return rs.getInt("quatityStock");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantity;
+    }
+
+    public static boolean insertProduct(Products product) {
+        boolean rowInserted = false;
+        String query = "INSERT INTO products (productId, productName,priceSell, imageProduct, brandName) VALUES (?, ?, ?, ?, ?);";
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, product.getProductId());
+            ps.setString(2, product.getProductName());
+            ps.setInt(3, product.getPriceSell());
+            ps.setString(4, product.getImageProduct());
+            ps.setString(5, product.getBrandName());
+            rowInserted = ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowInserted;
+
+    }
+
+    public static boolean insertStock(Stocks stock) {
+        boolean rowInserted = false;
+        String query = "INSERT INTO stocks (productId, quatityStock) VALUES (?, ?);";
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, stock.getProductId());
+            ps.setInt(2, stock.getQuatityStock());
+            rowInserted = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowInserted;
+    }
+
+    public static boolean deleteProduct(int productId) {
+        boolean rowDeleted = false;
+        String query = "DELETE FROM products WHERE productId = ?;";
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, productId);
+            rowDeleted = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowDeleted;
+    }
+
+    public static boolean updateProductInfo(Products product) {
+        String query = "UPDATE products SET productName = ?,imageProduct = ?,brandName = ?,priceSell=? WHERE productId = ?;";
+        boolean rowUpdated = false;
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setString(1, product.getProductName());
+            ps.setString(2, product.getImageProduct());
+            ps.setString(3, product.getBrandName());
+            ps.setInt(4, product.getPriceSell());
+            ps.setInt(5, product.getProductId());
+            rowUpdated = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowUpdated;
+    }
+
+    public static boolean updateStock(Stocks stock) {
+        String query = "UPDATE stocks SET quatityStock = ? WHERE productId = ?;";
+        boolean rowUpdated = false;
+        try (
+                Connection conn = new DBConnect().getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+        ) {
+            ps.setInt(1, stock.getQuatityStock());
+            ps.setInt(2, stock.getProductId());
+            rowUpdated = ps.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return rowUpdated;
+    }
+
 }

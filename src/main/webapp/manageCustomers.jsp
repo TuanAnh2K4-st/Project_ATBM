@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--Chúng ta có thể đặt các tệp JSP ở bất kỳ vị trí nào trong tệp WAR, tuy nhiên nếu chúng ta đặt nó bên trong thư mục WEB-INF,
@@ -25,23 +25,29 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
         <div class="avatar img">
             <img src="img/avatar.jpg" alt="Admin Avatar">
             <span>Admin CAD</span> <!-- Thay tên admin -->
-
         </div>
         <nav>
             <ul>
                 <li><a href="#dashboard" onclick="showSection('dashboard')"><i class="fa fa-chart-line"></i> Bảng điều
                     khiển</a></li>
-                <li><a href="admin-products" onclick="showSection('products')"><i class="fa fa-box"></i> Quản lý Sản phẩm</a>
+                <li><a href="admin-products"><i class="fa fa-box"></i> Quản lý Sản
+                    phẩm</a>
                 </li>
-                <li><a href="admin-orders" onclick="showSection('orders')"><i class="fa fa-shopping-cart"></i> Quản lý Đơn
+                <li><a href="admin-orders"><i class="fa fa-shopping-cart"></i> Quản lý
+                    Đơn
                     hàng</a></li>
-                <li><a href="admin-customers" onclick="showSection('customers')"><i class="fa fa-users"></i> Quản lý Khách
+                <li><a href="admin-customers?action=list"><i class="fa fa-users"></i> Quản lý
+                    Khách
                     hàng</a></li>
-                <li><a href="admin-inventory" onclick="showSection('inventory')"><i class="fa fa-warehouse"></i> Quản lý Kho</a>
+                <li><a href="admin-inventory"><i class="fa fa-warehouse"></i> Quản lý
+                    Kho</a>
                 </li>
-                <li><a href="admin-discount" onclick="showSection('discount')"><i class="fa-sharp fa-solid fa-file"></i> Quản lý mã giảm giá</a></li>
-                <li><a href="admin-settings" onclick="showSection('settings')"><i class="fa fa-cogs"></i> Cài Đặt</a></li>
-                <li><a href="admin-users" onclick="showSection('users')"><i class="fa-solid fa-user"></i> Tài khoản người dùng</a></li>
+                <li><a href="admin-discount"><i class="fa-sharp fa-solid fa-file"></i>
+                    Quản lý mã giảm giá</a></li>
+                <li><a href="admin-settings"><i class="fa fa-cogs"></i> Cài Đặt</a>
+                </li>
+                <li><a href="admin-users"><i class="fa-solid fa-user"></i> Tài khoản
+                    người dùng</a></li>
 
             </ul>
         </nav>
@@ -49,13 +55,16 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
 </div>
 <!-- Main Content -->
 <main class="content">
-    <section id="customers">
-        <div class="container" >
+    <div id="customers">
+        <div class="container">
             <h2>Quản lý thông tin khách hàng</h2>
-            <div class="search-container">
-                <input class="search" type="text" placeholder="Tìm kiếm khách hàng..."/>
-                <button class="button-search">Tìm kiếm</button>
-            </div>
+            <form action="admin-customers" method="get" >
+                <div class="search-container">
+                    <input type="hidden" name="action" value="search"/>
+                    <input class="search" type="text" name="keyword" value="${param.keyword}"  placeholder="Nhập tên khách hàng..."/>
+                    <button type="submit" class="button-search">Tìm kiếm</button>
+                </div>
+            </form>
             <table>
                 <thead>
                 <tr>
@@ -71,52 +80,137 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>nguyenvana@example.com</td>
-                    <td>01/01/1990</td>
-                    <td>0123456789</td>
-                    <td>123 Đường ABC, TP.HCM</td>
-                    <td>Nam</td>
-                    <td>Giáo viên</td>
-                    <td>
-                        <button class="btn-edit">Sửa</button>
-                        <button class="btn-delete">Xóa</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Trần Thị B</td>
-                    <td>tranthib@example.com</td>
-                    <td>10/10/1995</td>
-                    <td>0987654321</td>
-                    <td>456 Đường XYZ, Hà Nội</td>
-                    <td>Nữ</td>
-                    <td>Kế toán</td>
-                    <td>
-                        <button class="btn-edit">Sửa</button>
-                        <button class="btn-delete">Xóa</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Lê Minh C</td>
-                    <td>leminhc@example.com</td>
-                    <td>15/03/1998</td>
-                    <td>0931234567</td>
-                    <td>789 Đường MNO, Đà Nẵng</td>
-                    <td>Nam</td>
-                    <td>Kỹ sư</td>
-                    <td>
-                        <button class="btn-edit">Sửa</button>
-                        <button class="btn-delete">Xóa</button>
-                    </td>
-                </tr>
+                <c:forEach items="${customersList}" var="c">
+                    <tr>
+                        <td>${c.customerId}</td>
+                        <td>${c.fullName}</td>
+                        <td>${c.email}</td>
+                        <td>${c.dateOfBirth}</td>
+                        <td>${c.phoneNum}</td>
+                        <td>${c.address}</td>
+                        <td>${c.gender}</td>
+                        <td>${c.job}</td>
+                        <td>
+                            <form action="admin-customers" method="post">
+                                <input type="hidden" name="action" value="edit">
+                                <input type="hidden" name="customerId" value="${c.customerId}">
+                                <button type="submit" class="btn-edit">Sửa</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="admin-customers" method="post" onsubmit="return confirmDelete()">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="customerId" value="${c.customerId}">
+                            <button type="submit" class="btn-delete">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
-    </section>
+        <div class="container">
+            <!-- FORM SỬA -->
+            <c:if test="${not empty customerToEdit}">
+                <h4>Chỉnh sửa thông tin khách hàng</h4>
+                <form action="admin-customers" method="post">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="customerId" value="${customerToEdit.customerId}">
+                    <div class="form-group">
+                        <!-- Tên KH -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="name">Tên khách hàng</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" name="name"
+                                       value="${customerToEdit.fullName}" required>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="email" name="email"
+                                       value="${customerToEdit.email}">
+                            </div>
+                        </div>
+
+                        <!-- Ngày sinh -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="date-of-birth">Ngày sinh</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="date-of-birth" name="dateOfBirth"
+                                       value="${customerToEdit.dateOfBirth}">
+                            </div>
+                        </div>
+
+                        <!-- SDT -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="phoneNum">SĐT</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="phoneNum" name="phoneNum"
+                                       value="${customerToEdit.phoneNum}">
+                            </div>
+                        </div>
+
+                        <!-- Địa chỉ -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="address">Địa chỉ</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="address" name="address"
+                                       value="${customerToEdit.address}">
+                            </div>
+                        </div>
+                        <!-- Giới tính -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="gender">Giới tính</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="gender" name="gender"
+                                       value="${customerToEdit.gender}">
+                            </div>
+                        </div>
+                        <!-- Công việc -->
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="job">Nghề</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="job" name="job"
+                                       value="${customerToEdit.job}">
+                            </div>
+                        </div>
+                        <!-- Nút submit -->
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </c:if>
+        </div>
+        <%
+            String message = (String) session.getAttribute("message");
+            if (message != null) {
+        %>
+        <script>
+            alert("<%= message %>");
+        </script>
+        <%
+                session.removeAttribute("message"); // Xóa sau khi hiển thị để tránh hiển thị lại
+            }
+        %>
+    </div>
+    <div>
+        <c:if test="${not empty message}">
+            <script>
+                alert("${message}");
+            </script>
+        </c:if>
+    </div>
 </main>
+<script>
+    function confirmDelete() {
+        return confirm("Bạn có chắc chắn muốn xóa khách hàng này?");
+    }
+</script>
 </body>
 </html>

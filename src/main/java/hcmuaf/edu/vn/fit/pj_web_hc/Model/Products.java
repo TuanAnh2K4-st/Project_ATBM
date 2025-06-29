@@ -5,21 +5,21 @@ import java.sql.Timestamp;
 
 public class Products {
     private int productId;
-    private String productName ;
-    private int priceBuy ;
+    private String productName;
+    private int priceBuy;
     private int priceSell;
-    private String  productDetail ;
-    private String imageProduct ;
-    private String unitOfSure ;
-    private int  hozandLevel ;
-    private String brandName ;
-    private Timestamp createAt ;
-    private int categoryId ;
+    private String productDetail;
+    private String imageProduct;
+    private String unitOfSure;
+    private int hozandLevel;
+    private String brandName;
+    private Timestamp createAt;
+    private int categoryId;
 
     // Constructor đầy đủ
     public Products(int productId, String productName, int priceBuy, int priceSell,
-                   String productDetail, String imageProduct, String unitOfSure,
-                   int hozandLevel, String brandName, Timestamp createAt, int categoryId) {
+                    String productDetail, String imageProduct, String unitOfSure,
+                    int hozandLevel, String brandName, Timestamp createAt, int categoryId) {
         this.productId = productId;
         this.productName = productName;
         this.priceBuy = priceBuy;
@@ -33,11 +33,19 @@ public class Products {
         this.categoryId = categoryId;
     }
 
-    public Products(int id,  String imageURL,String name, int price) {
+    public Products(int id, String imageURL, String name, int price) {
         this.productId = id;
         this.imageProduct = imageURL;
         this.productName = name;
         this.priceSell = price;
+    }
+
+    public Products(int id, String name, String brandName, int priceSell, String imageURL) {
+        this.productId = id;
+        this.productName = name;
+        this.brandName = brandName;
+        this.priceSell = priceSell;
+        this.imageProduct = imageURL;
     }
 
 
@@ -148,7 +156,6 @@ public class Products {
                 ", createAt=" + createAt +
                 '}';
     }
-
 
 
 }

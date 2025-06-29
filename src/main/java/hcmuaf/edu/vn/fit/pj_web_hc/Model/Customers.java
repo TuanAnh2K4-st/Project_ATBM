@@ -1,6 +1,6 @@
 package hcmuaf.edu.vn.fit.pj_web_hc.Model;
 
-public class Cutomers {
+public class Customers {
     private int customerId ;
     private String fullName ;
     private String dateOfBirth ;
@@ -11,6 +11,33 @@ public class Cutomers {
     private String workSpace ;
     private String updateAt ;
     private int userId ;
+
+    //constructor đầy đủ
+    public Customers(int customerId, String fullName, String dateOfBirth, String phoneNum, String address, String gender, String job, String updateAt, String workSpace, int userId) {
+        this.customerId = customerId;
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNum = phoneNum;
+        this.address = address;
+        this.gender = gender;
+        this.job = job;
+        this.updateAt = updateAt;
+        this.workSpace = workSpace;
+        this.userId = userId;
+    }
+
+    public Customers(int customerId, String fullName, String dateOfBirth, String phoneNum, String address, String gender, String job) {
+        this.customerId = customerId;
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNum = phoneNum;
+        this.address = address;
+        this.gender = gender;
+        this.job = job;
+    }
+    public Customers(){
+
+    }
 
     public int getCustomerId() {
         return customerId;

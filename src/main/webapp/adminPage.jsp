@@ -3,7 +3,7 @@
 <%@ page import="hcmuaf.edu.vn.fit.pj_web_hc.Model.KeyAccount" %>
 <%@ page import="hcmuaf.edu.vn.fit.pj_web_hc.Model.AccountUsers" %>
 <%@ page import="java.util.Map" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--Chúng ta có thể đặt các tệp JSP ở bất kỳ vị trí nào trong tệp WAR, tuy nhiên nếu chúng ta đặt nó bên trong thư mục WEB-INF,
@@ -36,17 +36,24 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
             <ul>
                 <li><a href="#dashboard" onclick="showSection('dashboard')"><i class="fa fa-chart-line"></i> Bảng điều
                     khiển</a></li>
-                <li><a href="#products" onclick="showSection('products')"><i class="fa fa-box"></i> Quản lý Sản phẩm</a>
+                <li><a href="${pageContext.request.contextPath}/admin-products"><i class="fa fa-box"></i> Quản lý Sản
+                    phẩm</a>
                 </li>
-                <li><a href="admin-orders" onclick="showSection('orders')"><i class="fa fa-shopping-cart"></i> Quản lý Đơn
+                <li><a href="${pageContext.request.contextPath}/admin-orders"><i class="fa fa-shopping-cart"></i> Quản
+                    lý Đơn
                     hàng</a></li>
-                <li><a href="#customers" onclick="showSection('customers')"><i class="fa fa-users"></i> Quản lý Khách
+                <li><a href="${pageContext.request.contextPath}/admin-customers?action=list"><i class="fa fa-users"></i> Quản lý
+                    Khách
                     hàng</a></li>
-                <li><a href="#inventory" onclick="showSection('inventory')"><i class="fa fa-warehouse"></i> Quản lý Kho</a>
+                <li><a href="${pageContext.request.contextPath}/admin-inventory"><i class="fa fa-warehouse"></i> Quản lý
+                    Kho</a>
                 </li>
-                <li><a href="#discount" onclick="showSection('discount')"><i class="fa-sharp fa-solid fa-file"></i> Quản lý mã giảm giá</a></li>
-                <li><a href="#settings" onclick="showSection('settings')"><i class="fa fa-cogs"></i> Cài Đặt</a></li>
-                <li><a href="#users" onclick="showSection('users')"><i class="fa-solid fa-user"></i> Tài khoản người dùng</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin-discount"><i
+                        class="fa-sharp fa-solid fa-file"></i> Quản lý mã giảm giá</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin-settings"><i class="fa fa-cogs"></i> Cài Đặt</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/admin-users"><i class="fa-solid fa-user"></i> Tài khoản
+                    người dùng</a></li>
 
             </ul>
         </nav>
@@ -68,7 +75,7 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
         </div>
     </section>
     <section id="products" class="product-section">
-        <div class="container"style="background: #b3d4fc;box-shadow: none">
+        <div class="container" style="background: #b3d4fc;box-shadow: none">
             <h2>Quản lý Sản phẩm</h2>
             <div class="product-list">
                 <div class="card">
@@ -89,8 +96,9 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                         <tr>
                             <td>Hóa chất A</td>
                             <td>HC001</td>
-                            <td><img src="https://hoachatthinghiem.org/wp-content/uploads/2024/10/Sodium-Dodecylsulfonate-%E2%89%A597-AR-Chai-250G-Xilong-Cas-2386-53-0-768x768.jpg"
-                                     alt="Hóa chất A" style="width:50px;"></td>
+                            <td><img
+                                    src="https://hoachatthinghiem.org/wp-content/uploads/2024/10/Sodium-Dodecylsulfonate-%E2%89%A597-AR-Chai-250G-Xilong-Cas-2386-53-0-768x768.jpg"
+                                    alt="Hóa chất A" style="width:50px;"></td>
                             <td>Xilong</td>
                             <td>100</td>
                             <td>750.000 VND</td>
@@ -101,8 +109,9 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                         <tr>
                             <td>Hóa chất B</td>
                             <td>HC002</td>
-                            <td><img src="https://hoachatthinghiem.org/wp-content/uploads/2024/11/Glycine-100g-merck.jpg"
-                                     alt="Hóa chất B" style="width:50px;"></td>
+                            <td><img
+                                    src="https://hoachatthinghiem.org/wp-content/uploads/2024/11/Glycine-100g-merck.jpg"
+                                    alt="Hóa chất B" style="width:50px;"></td>
                             <td>Xilong</td>
                             <td>40</td>
                             <td>1.200.000 VND</td>
@@ -145,7 +154,9 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                                     <input type="text" id="productPrice" class="form-control" required></div>
 
                             </div>
-                            <div class="row"><button type="submit" class="btn btn-success">Thêm sản phẩm</button></div>
+                            <div class="row">
+                                <button type="submit" class="btn btn-success">Thêm sản phẩm</button>
+                            </div>
                         </form>
                     </div>
                     <div class="card">
@@ -191,7 +202,7 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                                 <td>
                                     <c:choose>
                                         <c:when test="${order.statusOrder == 'PROCESSING'}">
-                                        <span class="badge bg-warning">Đang xử lý</span>
+                                            <span class="badge bg-warning">Đang xử lý</span>
                                         </c:when>
                                         <c:when test="${order.statusOrder == 'COMPLETED'}">
                                             <span class="badge bg-success">Hoàn thành</span>
@@ -206,13 +217,16 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                                 </td>
                                 <td><fmt:formatDate value="${order.orderDate}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                                 <td>${order.deliveryAddress}</td>
-                                <td><fmt:formatNumber value="${order.totalAmount}" type="currency" currencySymbol=" VNĐ" groupingUsed="true"/></td>
+                                <td><fmt:formatNumber value="${order.totalAmount}" type="currency" currencySymbol=" VNĐ"
+                                                      groupingUsed="true"/></td>
                                 <td>${order.hashData}</td>
                                 <td>${order.signature}</td>
                                 <td class="text-center">
-                                    <a href="order-detail?orderId=${order.orderId}" class="btn btn-sm btn-info">Chi tiết</a>
+                                    <a href="order-detail?orderId=${order.orderId}" class="btn btn-sm btn-info">Chi
+                                        tiết</a>
                                     <a href="edit-order?orderId=${order.orderId}" class="btn btn-sm btn-primary">Sửa</a>
-                                    <a href="delete-order?orderId=${order.orderId}" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này?')">Xóa</a>
+                                    <a href="delete-order?orderId=${order.orderId}" class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này?')">Xóa</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -226,7 +240,7 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </section>
     <section id="customers">
-        <div class="container" >
+        <div class="container">
             <h2>Quản lý thông tin khách hàng</h2>
             <div class="search-container">
                 <input class="search" type="text" placeholder="Tìm kiếm khách hàng..."/>
@@ -423,7 +437,7 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
         <div class="container">
             <h2>Quản lý mã giảm giá</h2>
             <div class="search-container">
-                <input class="search" type="text" placeholder="Tìm kiếm mã giảm giá..." />
+                <input class="search" type="text" placeholder="Tìm kiếm mã giảm giá..."/>
                 <button class="button-search">Tìm kiếm</button>
             </div>
             <table>
@@ -515,7 +529,8 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                 <input type="password" id="new-password" name="new-password" placeholder="Nhập mật khẩu mới">
 
                 <label for="confirm-password">Xác nhận mật khẩu:</label>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Nhập lại mật khẩu mới">
+                <input type="password" id="confirm-password" name="confirm-password"
+                       placeholder="Nhập lại mật khẩu mới">
 
                 <button type="submit">Cập nhật mật khẩu</button>
             </form>
@@ -584,7 +599,8 @@ ví dụ nếu tôi có một trang ví dụ JSP như bên dưới bên trong th
                 <button type="button" onclick="uploadAndDisplayFile()">Tải lên</button>
             </form>
 
-            <div id="fileContent" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; background-color: #2693E0; display: none;">
+            <div id="fileContent"
+                 style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; background-color: #2693E0; display: none;">
                 <h5>Nội dung tệp:</h5>
                 <pre id="fileText" style="white-space: pre-wrap; word-wrap: break-word;"></pre>
             </div>
